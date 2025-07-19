@@ -1,4 +1,4 @@
-.loading-container
+.loading
   display: flex
   justify-content: center
   align-items: center
@@ -6,7 +6,7 @@
   background-color: #f5f5f5
   padding: 20px
 
-  .loading-card
+  &__container
     background: white
     border-radius: 12px
     padding: 40px
@@ -15,26 +15,26 @@
     max-width: 400px
     width: 100%
 
-    .pokemon-logo
-      margin-bottom: 30px
+  &__logo
+    margin-bottom: 30px
+    
+    .loading__logo-img
+      height: 40px
+      width: auto
+
+  &__content
+    .loading__animation
+      margin-bottom: 20px
       
-      .logo
-        height: 40px
-        width: auto
+      .loading__gif
+        width: 120px
+        height: 120px
+        object-fit: contain
 
-    .loading-content
-      .pokeball-animation
-        margin-bottom: 20px
-        
-        .loading-gif
-          width: 120px
-          height: 120px
-          object-fit: contain
-
-      .loading-text
-        h2
-          color: #1976d2
-          font-size: 24px
-          font-weight: 600
-          margin: 0
-          font-family: 'Roboto', sans-serif
+    .loading__text
+      h2
+        color: #1976d2
+        font-size: 24px
+        font-weight: 600
+        margin: 0
+        font-family: 'Roboto', sans-serif

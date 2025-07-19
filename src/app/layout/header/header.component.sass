@@ -1,5 +1,36 @@
-.loading
-  &__container
-  &__card
+.header
+  background: white
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+  padding: 0 20px
+  position: sticky
+  top: 0
+  z-index: 1000
+
   &__content
-  &__text
+    display: flex
+    justify-content: space-between
+    align-items: center
+    max-width: 1200px
+    margin: 0 auto
+    height: 70px
+
+  &__logo-container
+    .header__pokemon-logo
+      height: 40px
+      width: auto
+
+  &__navigation
+    display: flex
+    gap: 20px
+
+  &__nav-button
+    display: flex
+    align-items: center
+    gap: 8px
+    color: #1976d2
+    font-weight: 500
+    
+    mat-icon
+      font-size: 20px
+      width: 20px
+      height: 20px
