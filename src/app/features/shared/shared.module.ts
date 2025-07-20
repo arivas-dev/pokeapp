@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material imports
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +27,7 @@ import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,

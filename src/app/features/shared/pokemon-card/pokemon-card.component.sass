@@ -1,9 +1,9 @@
 @import '../../../../styles/variables'
 
 .pokemon-card
-  background: white
-  border-radius: 12px
-  padding: 16px
+  background: #f5f5f5
+  border-radius: 16px
+  padding: 16px 16px 8px 16px
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
   cursor: pointer
   transition: all 0.3s ease
@@ -12,15 +12,17 @@
   display: flex
   flex-direction: column
   align-items: center
-  gap: 12px
+  gap: 0
+  // min-height: 100px
+  overflow: visible
 
   &:hover
     transform: translateY(-2px)
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
 
   &--selected
-    border-color: $primary-color
-    background: #f8f9ff
+    border-color: $secondary-color
+    background: $secondary-color
 
   &--disabled
     opacity: 0.5
@@ -35,62 +37,87 @@
     display: flex
     justify-content: center
     align-items: center
+    // margin-bottom: 0
+    position: relative
+    z-index: 2
+    flex: 1
+    // margin-top: -40px
 
   &__image
-    width: 80px
-    height: 80px
+    width: 120px
+    height: 120px
     object-fit: contain
     border-radius: 8px
+    position: relative
+    z-index: 3
+    transform: translateY(-60px)
+    margin-bottom: -60px
+    // background: white
+    border-radius: 50%
 
-  &__info
-    text-align: center
-    width: 100%
+  &__info-label
+    background: $primary-color
+    color: white
+    padding: 8px 12px
+    border-radius: 20px
+    display: flex
+    align-items: center
+    gap: 8px
+    font-weight: 600
+    font-size: 14px
+    font-family: $font-family-primary
+    min-width: 120px
+    justify-content: center
+    position: relative
+    z-index: 1
+    margin-top: auto
+    margin-bottom: 8px
 
   &__number
-    font-size: 12px
-    color: $text-light
-    font-weight: 500
-    margin-bottom: 4px
+    font-weight: 600
+    color: white
 
   &__name
-    font-size: 14px
-    color: $text-color
     font-weight: 600
-    font-family: $font-family-primary
+    color: white
+    text-transform: capitalize
 
-  &__selection-indicator
-    position: absolute
-    top: 8px
-    right: 8px
-    color: $primary-color
-    
-    mat-icon
-      font-size: 20px
-      width: 20px
-      height: 20px
 
-// Tablet and up
-@media (min-width: $breakpoint-sm)
-  .pokemon-card
-    padding: 20px
-    gap: 16px
+  // Tablet and up
+  @media (min-width: $breakpoint-sm)
+    .pokemon-card
+      // padding: 20px 20px 12px 20px
+      gap: 0
 
-    &__image
-      width: 100px
-      height: 100px
+      &__image-container
+        margin-top: -80px
 
-    &__name
-      font-size: 16px
+      &__image
+        width: 140px
+        height: 140px
+        transform: translateY(0px)
+        margin-bottom: 0px
 
-// Desktop and up
-@media (min-width: $breakpoint-md)
-  .pokemon-card
-    padding: 24px
-    gap: 20px
+ 
 
-    &__image
-      width: 120px
-      height: 120px
+  // // Desktop and up
+  // @media (min-width: $breakpoint-md)
+  //   .pokemon-card
+  //     padding: 24px 24px 16px 24px
+  //     gap: 0
+  //     min-height: 220px
 
-    &__name
-      font-size: 18px
+  //     &__image-container
+  //       margin-top: -60px
+
+  //     &__image
+  //       width: 160px
+  //       height: 160px
+  //       transform: translateY(-80px)
+  //       margin-bottom: -80px
+
+  //     &__info-label
+  //       font-size: 18px
+  //       padding: 12px 20px
+  //       min-width: 160px
+  //       margin-bottom: 16px

@@ -2,14 +2,15 @@
      [class.pokemon-card--selected]="pokemon.selected"
      [class.pokemon-card--disabled]="!canSelect && !pokemon.selected"
      (click)="onCardClick()">
+  
+  <!-- Pokemon Image -->
   <div class="pokemon-card__image-container">
     <img [src]="pokemon.image" [alt]="pokemon.name" class="pokemon-card__image">
   </div>
-  <div class="pokemon-card__info">
-    <div class="pokemon-card__number">#{{ pokemon.id.toString().padStart(3, '0') }}</div>
-    <div class="pokemon-card__name">{{ pokemon.name }}</div>
-  </div>
-  <div class="pokemon-card__selection-indicator" *ngIf="pokemon.selected">
-    <mat-icon>check_circle</mat-icon>
+  
+  <!-- Pokemon Info Label -->
+  <div class="pokemon-card__info-label">
+    <span class="pokemon-card__number">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+    <span class="pokemon-card__name">{{ pokemon.name }}</span>
   </div>
 </div>

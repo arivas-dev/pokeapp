@@ -25,12 +25,22 @@
             <div class="pokemon-selection__search">
                 <mat-form-field appearance="outline" class="pokemon-selection__search-field">
                     <mat-label>Buscar por índice, nombre...</mat-label>
-                    <input matInput placeholder="Buscar Pokémon">
+                    <input matInput 
+                           placeholder="Buscar Pokémon"
+                           [(ngModel)]="searchQuery"
+                           (input)="onSearchInput($event)">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </div>
 
-            <div class="pokemon-selection__grid">
+            <!-- Loading state -->
+            <div *ngIf="loading" class="pokemon-selection__loading">
+                <mat-spinner diameter="40"></mat-spinner>
+                <p>Cargando Pokémon...</p>
+            </div>
+
+            <!-- Pokemon grid -->
+            <div *ngIf="!loading" class="pokemon-selection__grid">
                 <app-pokemon-card
                     *ngFor="let pokemon of pokemonList"
                     [pokemon]="pokemon"
@@ -42,8 +52,16 @@
                 </app-pokemon-card>
             </div>
 
+            <!-- No results message -->
+            <div *ngIf="!loading && pokemonList.length === 0" class="pokemon-selection__no-results">
+                <p>No se encontraron Pokémon con ese nombre.</p>
+            </div>
+
             <div class="pokemon-selection__actions">
-                <button mat-raised-button class="pokemon-selection__save-button">
+                <button mat-raised-button 
+                        class="pokemon-selection__save-button"
+                        (click)="onSave()"
+                        [disabled]="selectedPokemon.length < 3">
                     Guardar
                 </button>
             </div>

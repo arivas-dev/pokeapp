@@ -1,11 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-export interface Pokemon {
-  id: number;
-  name: string;
-  image: string;
-  selected?: boolean;
-}
+import { Pokemon } from '../pokemon.service';
 
 @Component({
   selector: 'app-pokemon-card',
@@ -14,24 +8,28 @@ export interface Pokemon {
 })
 export class PokemonCardComponent {
   @Input() pokemon!: Pokemon;
-  @Input() selectable: boolean = true;
+  @Input() selectable: boolean = false;
   @Input() maxSelections: number = 3;
   @Input() selectedCount: number = 0;
-  
+
   @Output() pokemonSelected = new EventEmitter<Pokemon>();
   @Output() pokemonDeselected = new EventEmitter<Pokemon>();
 
-  onCardClick(): void {
-    if (!this.selectable) return;
-    
-    if (this.pokemon.selected) {
-      this.pokemonDeselected.emit(this.pokemon);
-    } else if (this.selectedCount < this.maxSelections) {
-      this.pokemonSelected.emit(this.pokemon);
-    }
+  get canSelect(): boolean {
+    return this.selectable && (this.pokemon.selected || this.selectedCount < this.maxSelections);
   }
 
-  get canSelect(): boolean {
-    return this.selectable && (!this.pokemon.selected && this.selectedCount < this.maxSelections);
+  onCardClick(): void {
+    if (!this.selectable || !this.canSelect) {
+      return;
+    }
+
+    if (this.pokemon.selected) {
+      this.pokemon.selected = false;
+      this.pokemonDeselected.emit(this.pokemon);
+    } else {
+      this.pokemon.selected = true;
+      this.pokemonSelected.emit(this.pokemon);
+    }
   }
 }

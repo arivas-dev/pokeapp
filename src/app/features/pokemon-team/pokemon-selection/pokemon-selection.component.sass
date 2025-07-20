@@ -42,19 +42,41 @@
 
   &__search
     margin-bottom: 20px
-    
+
     .pokemon-selection__search-field
       width: 100%
+
+  &__loading
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    padding: 40px 20px
+    gap: 16px
+
+    p
+      color: $text-color
+      font-size: 14px
+      margin: 0
+
+  &__no-results
+    text-align: center
+    padding: 40px 20px
+
+    p
+      color: $text-color
+      font-size: 14px
+      margin: 0
 
   &__grid
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
-    gap: 16px
+    gap: 50px
     margin-bottom: 30px
 
   &__actions
     display: flex
-    justify-content: flex-end
+    justify-content: center
     margin-top: 20px
 
   &__save-button
@@ -64,17 +86,35 @@
     border-radius: 8px
     text-transform: none
     box-shadow: none
-    padding: 12px 24px
+    // padding: 12px 24px
     font-size: 14px
     font-weight: 500
+    transition: all 0.3s ease
+    align-self: center
+
+    &:not(:disabled)
+      background-color: $primary-color
+      color: white
+
+      &:hover
+        background-color: darken($primary-color, 10%)
+
+    &:disabled
+      opacity: 0.5
+      cursor: not-allowed
 
 // Tablet and up
 @media (min-width: $breakpoint-sm)
   .pokemon-selection
-    margin-top: 30px
-    
+    // margin-top: 30px
+
     &__content
-      gap: 40px
+      // gap: 40px
+      // display: flex
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
 
     &__title
       font-size: 24px
@@ -85,8 +125,8 @@
       text-align: left
 
     &__grid
-      grid-template-columns: repeat(3, 1fr)
-      gap: 20px
+      grid-template-columns: repeat(2, 1fr)
+      // gap: 20px
 
     &__save-button
       height: 48px
@@ -97,7 +137,7 @@
   .pokemon-selection
     padding: 0 50px
     margin-top: 50px
-    
+
     &__content
       display: flex
       flex-direction: row
@@ -121,7 +161,7 @@
 
     &__grid
       grid-template-columns: repeat(3, 1fr)
-      gap: 24px
+      gap: 50px
 
     &__save-button
-      width: 120px
+      min-width: 300px

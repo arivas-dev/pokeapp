@@ -10,9 +10,7 @@
   display: flex
   flex-direction: column
   justify-content: space-between
-  width: 100%
-  max-width: 350px
-  margin: 0 auto
+  width: calc(100vw - 60px)
   gap: 20px
 
   &__header
@@ -121,13 +119,14 @@
         font-weight: 700
         margin-right: 4px
 
-// Tablet and up
+Tablet and up
 @media (min-width: $breakpoint-sm)
   .profile-image-card
     min-height: 320px
     padding: 40px 20px
-    max-width: 400px
+    max-width: 380px
     border-radius: 30px
+    margin: 0 auto
 
     &__image-container
       .profile-image-card__image,
@@ -141,23 +140,23 @@
     &__name
       font-size: 2.5rem
 
-// Desktop and up
-@media (min-width: $breakpoint-md)
-  .profile-image-card
-    min-height: 400px
-    padding: 60px 30px
-    border-radius: 50px
-    min-width: 330px
+// // Desktop and up
+// @media (min-width: $breakpoint-md)
+//   .profile-image-card
+//     min-height: 400px
+//     padding: 60px 30px
+//     border-radius: 50px
+//     min-width: 330px
 
-    &__image-container
-      .profile-image-card__image,
-      .profile-image-card__placeholder
-        width: 269px
-        height: 269px
+//     &__image-container
+//       .profile-image-card__image,
+//       .profile-image-card__placeholder
+//         width: 269px
+//         height: 269px
 
-    &__title
-      font-size: 30px !important
-      font-weight: 400
+//     &__title
+//       font-size: 30px !important
+//       font-weight: 400
 
-    &__name
-      font-size: 3rem
+//     &__name
+//       font-size: 3rem

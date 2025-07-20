@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Pokemon } from '../../shared/pokemon-card/pokemon-card.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Pokemon, PokemonService } from '../../shared/pokemon.service';
 
 interface ProfileInfo {
   name?: string;
@@ -13,7 +15,9 @@ interface ProfileInfo {
   templateUrl: './pokemon-selection.component.html',
   styleUrls: ['./pokemon-selection.component.sass']
 })
-export class PokemonSelectionComponent implements OnInit {
+export class PokemonSelectionComponent implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+
   profileInfo: ProfileInfo = {
     name: 'José Sosa',
     hobby: 'Ver Series',
@@ -21,23 +25,74 @@ export class PokemonSelectionComponent implements OnInit {
     document: '05643215-9'
   };
 
-  pokemonList: Pokemon[] = [
-    { id: 1, name: 'Bulbasaur', image: 'assets/pokemon/bulbasaur.png', selected: false },
-    { id: 2, name: 'Ivysaur', image: 'assets/pokemon/ivysaur.png', selected: false },
-    { id: 3, name: 'Venusaur', image: 'assets/pokemon/venusaur.png', selected: false },
-    { id: 4, name: 'Charmander', image: 'assets/pokemon/charmander.png', selected: false },
-    { id: 5, name: 'Charmeleon', image: 'assets/pokemon/charmeleon.png', selected: false },
-    { id: 6, name: 'Charizard', image: 'assets/pokemon/charizard.png', selected: false },
-    { id: 7, name: 'Squirtle', image: 'assets/pokemon/squirtle.png', selected: false },
-    { id: 8, name: 'Wartortle', image: 'assets/pokemon/wartortle.png', selected: false },
-    { id: 9, name: 'Blastoise', image: 'assets/pokemon/blastoise.png', selected: false }
-  ];
-
+  pokemonList: Pokemon[] = [];
   selectedPokemon: Pokemon[] = [];
+  loading: boolean = false;
+  searchQuery: string = '';
 
-  constructor() { }
+  constructor(private pokemonService: PokemonService) { }
 
   ngOnInit(): void {
+    this.loadPokemon();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Load Pokémon from API
+   */
+  loadPokemon(): void {
+    this.loading = true;
+    this.pokemonService.getPokemonList(9, 0)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (pokemon: Pokemon[]) => {
+          this.pokemonList = pokemon;
+          this.loading = false;
+        },
+        error: (error: any) => {
+          console.error('Error loading Pokémon:', error);
+          this.loading = false;
+        }
+      });
+  }
+
+  /**
+   * Handle search input event
+   */
+  onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchPokemon(target.value);
+  }
+
+  /**
+   * Search Pokémon by name
+   */
+  searchPokemon(query: string): void {
+    this.searchQuery = query;
+    if (!query.trim()) {
+      this.loadPokemon();
+      return;
+    }
+
+    this.loading = true;
+    this.pokemonService.searchPokemon(query)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (pokemon: Pokemon[]) => {
+          this.pokemonList = pokemon;
+          this.loading = false;
+        },
+        error: (error: any) => {
+          console.error('Error searching Pokémon:', error);
+          this.loading = false;
+          // Fallback to original list on error
+          this.loadPokemon();
+        }
+      });
   }
 
   onPokemonSelected(pokemon: Pokemon): void {
@@ -52,5 +107,10 @@ export class PokemonSelectionComponent implements OnInit {
 
   onBackClick(): void {
     console.log('Back button clicked');
+  }
+
+  onSave(): void {
+    console.log('Selected Pokémon:', this.selectedPokemon);
+    // Navigate to next step or save data
   }
 }
