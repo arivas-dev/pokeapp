@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon, PokemonService } from '../../shared/pokemon.service';
@@ -30,7 +31,10 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   searchQuery: string = '';
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(
+    private pokemonService: PokemonService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadPokemon();
@@ -111,6 +115,16 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
 
   onSave(): void {
     console.log('Selected Pokémon:', this.selectedPokemon);
-    // Navigate to next step or save data
+    
+    // Save selected Pokémon to localStorage
+    localStorage.setItem('selectedPokemon', JSON.stringify(this.selectedPokemon));
+    
+    // Navigate to loading screen first, then to dashboard
+    this.router.navigate(['/loading']);
+    
+    // Simulate loading time and then navigate to dashboard
+    setTimeout(() => {
+      this.router.navigate(['/dashboard']);
+    }, 3000); // 3 seconds loading time
   }
 }

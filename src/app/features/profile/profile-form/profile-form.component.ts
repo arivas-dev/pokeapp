@@ -238,7 +238,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
    * Handle form submission
    */
   onSubmit(): void {
-    console.log('Erros', this.profileForm.errors)
+    console.log('Errors', this.profileForm.errors)
     if (this.profileForm.valid) {
       const profileData: TrainerProfile = {
         name: this.profileForm.get('name')?.value,
@@ -248,8 +248,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
         profileImage: this.profileImage || undefined
       };
 
-      // Save to localStorage for now (later we'll use a service)
-      // localStorage.setItem('trainerProfile', JSON.stringify(profileData));
+      // Save to localStorage
+      localStorage.setItem('trainerProfile', JSON.stringify(profileData));
       
       // Navigate to loading screen first
       this.router.navigate(['/loading']);

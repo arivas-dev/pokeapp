@@ -1,9 +1,17 @@
 <header class="header">
   <div class="header__content">
-    <div class="header__logo-container">
+    <div class="header__left">
       <img src="assets/pokemon-logo.png" alt="Pokemon" class="header__pokemon-logo">
     </div>
     
-  
+    <div class="header__right">
+      <button class="header__profile-dropdown" (click)="onProfileDropdown()">
+        {{ trainerName }}
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <button class="header__search-btn" (click)="onSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
   </div>
 </header>

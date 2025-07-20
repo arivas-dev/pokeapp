@@ -1,0 +1,103 @@
+<div class="trainer-dashboard">
+  <!-- Main Content -->
+  <div class="trainer-dashboard__content">
+    <!-- Left Section - Trainer Profile -->
+    <section class="trainer-dashboard__profile-section">
+      <div class="trainer-dashboard__profile-header">
+        <h1 class="trainer-dashboard__greeting">¡Hola {{ trainerProfile.name }}!</h1>
+        <button class="trainer-dashboard__edit-profile-btn" (click)="onEditProfile()">
+          <mat-icon>edit</mat-icon>
+          Editar perfil
+        </button>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="trainer-dashboard__profile-card">
+        <div class="trainer-dashboard__profile-card-header">
+          <span class="trainer-dashboard__trainer-label">Entrenador</span>
+          <mat-icon class="trainer-dashboard__medal">star</mat-icon>
+        </div>
+        
+        <div class="trainer-dashboard__profile-image">
+          <img [src]="trainerProfile.profileImage" alt="Profile" class="trainer-dashboard__profile-img">
+        </div>
+        
+        <div class="trainer-dashboard__profile-info">
+          <div class="trainer-dashboard__info-item">
+            <strong>Pasatiempo:</strong> {{ trainerProfile.hobby }}
+          </div>
+          <div class="trainer-dashboard__info-item">
+            <strong>Edad:</strong> {{ trainerProfile.age }}
+          </div>
+          <div class="trainer-dashboard__info-item">
+            <strong>DUI:</strong> {{ trainerProfile.document }}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Section - My Pokémon -->
+    <section class="trainer-dashboard__pokemon-section">
+      <div class="trainer-dashboard__pokemon-header">
+        <h2 class="trainer-dashboard__pokemon-title">Mis Pokémon</h2>
+        <button class="trainer-dashboard__edit-pokemon-btn" (click)="onEditPokemon()">
+          Editar
+        </button>
+      </div>
+
+      <div class="trainer-dashboard__pokemon-grid">
+        <div class="trainer-dashboard__pokemon-card" *ngFor="let pokemon of selectedPokemon">
+          <div class="trainer-dashboard__pokemon-image-container">
+            <img [src]="pokemon.image" [alt]="pokemon.name" class="trainer-dashboard__pokemon-image">
+          </div>
+          
+          <div class="trainer-dashboard__pokemon-info">
+            <div class="trainer-dashboard__pokemon-name">{{ pokemon.name }}</div>
+            <div class="trainer-dashboard__pokemon-types">
+              {{ pokemon.types.join('/') }}
+            </div>
+          </div>
+          
+          <div class="trainer-dashboard__pokemon-stats">
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">HP</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.hp / 255) * 100"></div>
+              </div>
+            </div>
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">Ataque</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.attack / 190) * 100"></div>
+              </div>
+            </div>
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">Defensa</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.defense / 230) * 100"></div>
+              </div>
+            </div>
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">Ataque Especial</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.specialAttack / 194) * 100"></div>
+              </div>
+            </div>
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">Defensa Especial</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.specialDefense / 230) * 100"></div>
+              </div>
+            </div>
+            <div class="trainer-dashboard__stat-item">
+              <span class="trainer-dashboard__stat-label">Velocidad</span>
+              <div class="trainer-dashboard__stat-bar">
+                <div class="trainer-dashboard__stat-fill" [style.width.%]="(pokemon.stats.speed / 180) * 100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

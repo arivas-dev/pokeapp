@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/loading/loading.module').then(m => m.LoadingModule)
   },
   {
+    path: 'dashboard',
+    loadChildren: () => import('./features/trainer-dashboard/trainer-dashboard.module').then(m => m.TrainerDashboardModule)
+  },
+  {
     path: '**',
     redirectTo: '/profile'
   }
