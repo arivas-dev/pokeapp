@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 
 // Components
 import { PokemonSelectionComponent } from './pokemon-selection/pokemon-selection.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatFormFieldModule,
     MatProgressBarModule,
-    MatChipsModule
+    MatChipsModule,
+    SharedModule
   ]
 })
 export class PokemonTeamModule { }

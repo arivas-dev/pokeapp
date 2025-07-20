@@ -1,50 +1,44 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // Angular Material imports
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSelectModule } from '@angular/material/select';
 
 // Components
-import { ProfileFormComponent } from './profile-form/profile-form.component';
-import { SharedModule } from '../shared/shared.module';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: ProfileFormComponent
-  }
-];
+import { ProfileImageCardComponent } from './profile-image-card/profile-image-card.component';
+import { PageHeaderComponent } from './page-header/page-header.component';
+import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 
 @NgModule({
   declarations: [
-    ProfileFormComponent
+    ProfileImageCardComponent,
+    PageHeaderComponent,
+    PokemonCardComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
     ReactiveFormsModule,
-    MatInputModule,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
-    MatFormFieldModule,
-    MatChipsModule,
-    MatSelectModule,
-    SharedModule
+    MatChipsModule
+  ],
+  exports: [
+    ProfileImageCardComponent,
+    PageHeaderComponent,
+    PokemonCardComponent
   ]
 })
-export class ProfileModule { }
+export class SharedModule { } 

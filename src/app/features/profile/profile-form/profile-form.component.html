@@ -1,48 +1,23 @@
 <div class="profile-form">
-    <div class="profile-form__header">
-
-        <h1 class="profile-form__title">
-            <button mat-icon-button class="profile-form__back-button">
-                <mat-icon>arrow_back_ios</mat-icon>
-            </button>
-            <span>
-                <strong>¡Hola!</strong> Configuremos tu perfil
-                <p class="profile-form__subtitle">Queremos conocerte mejor.</p>
-            </span>
-        </h1>
-    </div>
+    <app-page-header
+        [title]="'Configuremos tu perfil'"
+        [subtitle]="'Queremos conocerte mejor.'"
+        [backButtonText]="'¡Hola!'"
+        [showBackButton]="true"
+        (backClicked)="onBackClick()">
+    </app-page-header>
 
     <div class="profile-form__content">
         <!-- Left Column: Profile Image -->
         <div class="profile-form__image-section">
-            <div class="profile-form__image-card">
-                <h3 class="profile-form__image-title">Imágen perfil</h3>
-
-                <div class="profile-form__image-container">
-                    <img *ngIf="profileImage" [src]="profileImage" alt="Profile" class="profile-form__image">
-                    <img *ngIf="!profileImage" src="assets/profile-placeholder.png" alt="Profile"
-                        class="profile-form__image profile-form__image-placeholder">
-                </div>
-
-                <div class="profile-form__upload-section">
-                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*"
-                        class="profile-form__file-input" style="display: none;">
-                    <button mat-stroked-button (click)="fileInput.click()" class="profile-form__upload-button"
-                        *ngIf="!selectedFileName">
-                        <span class="profile-form__upload-button-text material-symbols-outlined">
-                            Adjunta un foto
-                            <mat-icon>cloud_upload</mat-icon>
-                        </span>
-                    </button>
-
-                    <div *ngIf="selectedFileName" class="profile-form__file-info">
-                        <span class="profile-form__file-name">{{ selectedFileName }}</span>
-                        <button mat-icon-button (click)="removeImage()" class="profile-form__remove-button">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <app-profile-image-card
+                [image]="profileImage"
+                [fileName]="selectedFileName"
+                [showFile]="true"
+                [isEditMode]="true"
+                (fileSelected)="onFileSelected($event)"
+                (fileRemoved)="removeImage()">
+            </app-profile-image-card>
         </div>
 
         <!-- Right Column: Personal Information -->
@@ -98,13 +73,11 @@
                         Formato de documento inválido
                     </mat-error>
                 </mat-form-field>
-<!-- [disabled]="!profileForm.valid" -->
+
                 <button mat-raised-button (click)="onSubmit()" 
                     class="profile-form__submit-button">
                     Continuar
                 </button>
-                <!-- all errors -->
-                
             </form>
         </div>
     </div>

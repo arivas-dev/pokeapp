@@ -1,1 +1,52 @@
-<p>pokemon-selection works!</p>
+<div class="pokemon-selection">
+    <app-page-header
+        [title]="'Ya casi terminamos!'"
+        [subtitle]="'Revisa la información, y completa lo solicitado.'"
+        [showBackButton]="true"
+        (backClicked)="onBackClick()">
+    </app-page-header>
+
+    <div class="pokemon-selection__content">
+        <!-- Left Section: Profile Card -->
+        <div class="pokemon-selection__profile-section">
+            <app-profile-image-card
+                [image]="'assets/profile-placeholder.png'"
+                [showInfo]="true"
+                [isEditMode]="false"
+                [profileInfo]="profileInfo">
+            </app-profile-image-card>
+        </div>
+
+        <!-- Right Section: Pokemon Selection -->
+        <div class="pokemon-selection__pokemon-section">
+            <h3 class="pokemon-selection__title">Pokémon</h3>
+            <p class="pokemon-selection__subtitle">Selecciona 3 Pokémon para que sean parte de tu equipo</p>
+            
+            <div class="pokemon-selection__search">
+                <mat-form-field appearance="outline" class="pokemon-selection__search-field">
+                    <mat-label>Buscar por índice, nombre...</mat-label>
+                    <input matInput placeholder="Buscar Pokémon">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="pokemon-selection__grid">
+                <app-pokemon-card
+                    *ngFor="let pokemon of pokemonList"
+                    [pokemon]="pokemon"
+                    [selectable]="true"
+                    [maxSelections]="3"
+                    [selectedCount]="selectedPokemon.length"
+                    (pokemonSelected)="onPokemonSelected($event)"
+                    (pokemonDeselected)="onPokemonDeselected($event)">
+                </app-pokemon-card>
+            </div>
+
+            <div class="pokemon-selection__actions">
+                <button mat-raised-button class="pokemon-selection__save-button">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

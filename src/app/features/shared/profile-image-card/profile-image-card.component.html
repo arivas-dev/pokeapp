@@ -1,0 +1,50 @@
+<div class="profile-image-card">
+  <!-- Header with name (for view mode) -->
+  <div class="profile-image-card__header" *ngIf="showInfo && profileInfo.name">
+    <h3 class="profile-image-card__name">{{ profileInfo.name }}</h3>
+  </div>
+
+  <!-- Title (for edit mode) -->
+  <h3 class="profile-image-card__title" *ngIf="isEditMode">Imágen perfil</h3>
+
+  <!-- Image container -->
+  <div class="profile-image-card__image-container">
+    <img *ngIf="image" [src]="image" alt="Profile" class="profile-image-card__image">
+    <img *ngIf="!image" src="assets/profile-placeholder.png" alt="Profile" 
+         class="profile-image-card__image profile-image-card__placeholder">
+  </div>
+
+  <!-- Upload section (edit mode) -->
+  <div class="profile-image-card__upload-section" *ngIf="isEditMode">
+    <input type="file" #fileInput (change)="onFileSelected($event)" 
+           accept="image/*" class="profile-image-card__file-input" style="display: none;">
+    
+    <button mat-stroked-button (click)="fileInput.click()" 
+            class="profile-image-card__upload-button" *ngIf="!fileName">
+      <span class="profile-image-card__upload-button-text">
+        Adjunta un foto
+        <mat-icon>cloud_upload</mat-icon>
+      </span>
+    </button>
+
+    <div *ngIf="fileName" class="profile-image-card__file-info">
+      <span class="profile-image-card__file-name">{{ fileName }}</span>
+      <button mat-icon-button (click)="onFileRemoved()" class="profile-image-card__remove-button">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Info section (view mode) -->
+  <div class="profile-image-card__info" *ngIf="showInfo">
+    <div *ngIf="profileInfo.hobby" class="profile-image-card__info-item">
+      <strong>Pasatiempo:</strong> {{ profileInfo.hobby }}
+    </div>
+    <div *ngIf="profileInfo.age" class="profile-image-card__info-item">
+      <strong>Edad:</strong> {{ profileInfo.age }}
+    </div>
+    <div *ngIf="profileInfo.document" class="profile-image-card__info-item">
+      <strong>DUI:</strong> {{ profileInfo.document }}
+    </div>
+  </div>
+</div>

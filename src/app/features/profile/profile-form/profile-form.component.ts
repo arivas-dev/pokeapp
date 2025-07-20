@@ -238,6 +238,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
    * Handle form submission
    */
   onSubmit(): void {
+    console.log('Erros', this.profileForm.errors)
     if (this.profileForm.valid) {
       const profileData: TrainerProfile = {
         name: this.profileForm.get('name')?.value,
@@ -248,7 +249,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
       };
 
       // Save to localStorage for now (later we'll use a service)
-      localStorage.setItem('trainerProfile', JSON.stringify(profileData));
+      // localStorage.setItem('trainerProfile', JSON.stringify(profileData));
       
       // Navigate to loading screen first
       this.router.navigate(['/loading']);
@@ -277,5 +278,13 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
       const input = this.hobbyInput.nativeElement;
       input.setSelectionRange(input.value.length, input.value.length);
     }
+  }
+
+  /**
+   * Handle back button click
+   */
+  onBackClick(): void {
+    // Navigate back or handle as needed
+    console.log('Back button clicked');
   }
 }

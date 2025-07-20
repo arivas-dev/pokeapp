@@ -1,0 +1,163 @@
+@import '../../../../styles/variables'
+
+.profile-image-card
+  background: $secondary-color
+  border-radius: 25px
+  padding: 30px 15px
+  text-align: center
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+  min-height: 280px
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  width: 100%
+  max-width: 350px
+  margin: 0 auto
+  gap: 20px
+
+  &__header
+    margin-bottom: 10px
+
+  &__name
+    font-size: 2rem
+    font-weight: 700
+    color: $primary-color
+    margin: 0
+    font-family: $font-family-primary
+
+  &__title
+    font-size: 20px
+    color: $primary-color
+    margin: 0 0 20px 0
+    text-align: center
+    font-family: $font-family-primary
+    font-weight: 400
+
+  &__image-container
+    margin-bottom: 20px
+    flex: 1
+    display: flex
+    align-items: center
+    justify-content: center
+    
+    .profile-image-card__image
+      width: 150px
+      height: 150px
+      border-radius: 50%
+      object-fit: cover
+      border: 14px solid white
+      background-color: #E7EFF5
+
+    .profile-image-card__placeholder
+      width: 150px
+      height: 150px
+      border-radius: 50%
+      background: #e3f2fd
+      display: flex
+      align-items: center
+      justify-content: center
+      margin: 0 auto
+      border: 14px solid white
+      background-color: #E7EFF5
+
+  &__upload-section
+    .profile-image-card__upload-button
+      width: 100%
+      margin-bottom: 10px
+      color: $text-light
+      border-color: $text-light
+      border-style: dashed
+      min-height: 70px
+      font-size: 14px
+      font-weight: 500
+      background: white
+      border-radius: 8px
+      text-transform: none
+      font-family: $font-family-primary
+
+    .profile-image-card__upload-button-text
+      display: flex
+      align-items: center
+      justify-content: space-between
+
+    .profile-image-card__file-info
+      display: flex
+      align-items: center
+      justify-content: space-between
+      background: white
+      padding: 10px 12px
+      border-radius: 6px
+      border: 1px dashed #ccc
+      margin-top: 10px
+      font-family: $font-family-primary
+      color: $text-light
+      
+      .profile-image-card__file-name
+        font-size: 12px
+        color: $text-light !important
+        flex: 1
+        font-weight: 500
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+      .profile-image-card__remove-button
+        color: $error-color
+        margin-left: 8px
+
+  &__info
+    margin-top: 20px
+    width: 100%
+    font-size: 1rem
+    color: #333
+    font-family: $font-family-primary
+    text-align: left
+
+    .profile-image-card__info-item
+      margin-bottom: 8px
+      
+      strong
+        color: $primary-color
+        font-weight: 700
+        margin-right: 4px
+
+// Tablet and up
+@media (min-width: $breakpoint-sm)
+  .profile-image-card
+    min-height: 320px
+    padding: 40px 20px
+    max-width: 400px
+    border-radius: 30px
+
+    &__image-container
+      .profile-image-card__image,
+      .profile-image-card__placeholder
+        width: 200px
+        height: 200px
+
+    &__title
+      font-size: 24px
+
+    &__name
+      font-size: 2.5rem
+
+// Desktop and up
+@media (min-width: $breakpoint-md)
+  .profile-image-card
+    min-height: 400px
+    padding: 60px 30px
+    border-radius: 50px
+    min-width: 330px
+
+    &__image-container
+      .profile-image-card__image,
+      .profile-image-card__placeholder
+        width: 269px
+        height: 269px
+
+    &__title
+      font-size: 30px !important
+      font-weight: 400
+
+    &__name
+      font-size: 3rem

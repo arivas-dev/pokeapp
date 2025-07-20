@@ -1,0 +1,73 @@
+@import '../../../../styles/variables'
+
+.page-header
+  margin-bottom: 25px
+  width: 100%
+  position: relative
+
+  &__title
+    font-size: 24px
+    font-weight: 600
+    color: $primary-color
+    margin: 0 0 8px
+    font-family: $font-family-primary
+    line-height: 1.2
+    letter-spacing: 1px
+    text-align: left
+    margin-left: 0.8em
+
+    strong
+      font-weight: 800
+      font-style: bold
+
+  &__back-button
+    position: absolute
+    color: $primary-color
+    width: auto
+    left: 0
+    top: 0
+    z-index: 10
+    margin-bottom: 20px
+
+  &__content
+    display: inline-block
+
+  &__subtitle
+    font-size: 14px
+    color: $text-color
+    margin: 0
+    font-family: $font-family-primary
+    font-weight: 400
+    letter-spacing: 1px
+    text-align: left
+
+// Tablet and up
+@media (min-width: $breakpoint-sm)
+  .page-header
+    margin-bottom: 30px
+    text-align: left
+    
+    &__back-button
+      position: absolute
+      left: 0
+      top: 0
+      margin-bottom: 0
+
+    &__title
+      font-size: 28px
+      text-align: left
+
+    &__subtitle
+      text-align: left
+      margin-top: 0.5em
+
+// Desktop and up
+@media (min-width: $breakpoint-md)
+  .page-header
+    margin-bottom: 40px
+    
+    &__title
+      font-size: 35px
+
+    &__subtitle
+      font-size: 16px
