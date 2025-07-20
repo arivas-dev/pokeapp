@@ -1,40 +1,87 @@
+@import '../../../../styles/variables'
+
 .loading
   display: flex
   justify-content: center
   align-items: center
-  min-height: 100vh
-  background-color: #f5f5f5
-  padding: 20px
-
-  &__container
-    background: white
-    border-radius: 12px
-    padding: 40px
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
-    text-align: center
-    max-width: 400px
-    width: 100%
-
-  &__logo
-    margin-bottom: 30px
-    
-    .loading__logo-img
-      height: 40px
-      width: auto
+  min-height: calc(100vh - 70px)
+  position: relative
+  background-color: white
 
   &__content
-    .loading__animation
-      margin-bottom: 20px
-      
-      .loading__gif
+    position: relative
+   
+
+    .loading__gif
         width: 120px
         height: 120px
-        object-fit: contain
+        object-fit: cover
 
     .loading__text
       h2
-        color: #1976d2
+        color: $primary-color
         font-size: 24px
         font-weight: 600
-        margin: 0
-        font-family: 'Roboto', sans-serif
+        // margin: 0
+        font-family: $font-family-primary
+        position: relative
+        text-align: center
+
+        .dots::after
+          content: ''
+          animation: dots-appear 2s steps(3, end) infinite
+          font-weight: 700
+          letter-spacing: 2px
+          // display: inline-block
+          width: 1.5em
+          text-align: left
+          position: absolute
+          top: 0
+          right: 0
+
+
+@keyframes dots-appear
+  0%
+    content: ''
+  33%
+    content: '.'
+  66%
+    content: '..'
+  100%
+    content: '...'
+
+
+// Tablet and up
+@media (min-width: $breakpoint-sm)
+  .loading
+
+   &__content
+   
+    .loading__gif
+        width: 320px
+        height: 320px
+        object-fit: cover
+
+    .loading__text
+      h2
+        font-size: 40px
+        font-weight: 700
+
+// @media (min-width: $breakpoint-md)
+//   .loading
+
+//     &__content
+//     .loading__animation
+      
+//       .loading__gif
+
+//     .loading__text
+//       h2
+
+  .loading
+    &__container
+      &__content
+        .loading__animation
+          .loading__gif
+            width: 520px
+            height: 520px

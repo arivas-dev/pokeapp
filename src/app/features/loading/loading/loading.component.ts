@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loading',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    // Navigate to pokemon team after 3 seconds
+    setTimeout(() => {
+      this.router.navigate(['/pokemon-team']);
+    }, 3000);
   }
 
 }

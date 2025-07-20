@@ -5,8 +5,11 @@
             <button mat-icon-button class="profile-form__back-button">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
-            <strong>¡Hola!</strong> Configuremos tu perfil</h1>
-        <p class="profile-form__subtitle">Queremos conocerte mejor.</p>
+            <span>
+                <strong>¡Hola!</strong> Configuremos tu perfil
+                <p class="profile-form__subtitle">Queremos conocerte mejor.</p>
+            </span>
+        </h1>
     </div>
 
     <div class="profile-form__content">
@@ -95,11 +98,13 @@
                         Formato de documento inválido
                     </mat-error>
                 </mat-form-field>
-
-                <button mat-raised-button (click)="onSubmit()" [disabled]="!profileForm.valid"
+<!-- [disabled]="!profileForm.valid" -->
+                <button mat-raised-button (click)="onSubmit()" 
                     class="profile-form__submit-button">
                     Continuar
                 </button>
+                <!-- all errors -->
+                
             </form>
         </div>
     </div>

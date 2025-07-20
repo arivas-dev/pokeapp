@@ -250,8 +250,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
       // Save to localStorage for now (later we'll use a service)
       localStorage.setItem('trainerProfile', JSON.stringify(profileData));
       
-      // Navigate to next step
-      this.router.navigate(['/pokemon-team']);
+      // Navigate to loading screen first
+      this.router.navigate(['/loading']);
     } else {
       this.markFormGroupTouched();
     }
