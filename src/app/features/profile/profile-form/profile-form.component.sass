@@ -1,0 +1,352 @@
+@import '../../../../styles/variables'
+
+.profile-form
+  // margin: 0 auto
+  position: relative
+  margin-top: 20px
+  width: 100%
+  overflow-x: hidden
+  // padding: 0 15px
+  box-sizing: border-box
+
+  &__header
+    margin-bottom: 25px
+    width: 100%
+    position: relative
+    
+    .profile-form__back-button
+      position: absolute
+      color: $primary-color
+      width: auto
+      left: 0
+      top: 0
+      z-index: 10
+      margin-bottom: 20px
+
+    .profile-form__title
+      font-size: 24px
+      font-weight: 600
+      color: $primary-color
+      margin: 0 0 8px
+      font-family: $font-family-primary
+      line-height: 1.2
+      letter-spacing: 1px
+      text-align: left
+      margin-left: 0.8em
+
+      & strong
+        font-weight: 800
+        font-style: bold
+
+    .profile-form__subtitle
+      font-size: 14px
+      color: $text-color
+      margin: 0
+      font-family: $font-family-primary
+      font-weight: 400
+      letter-spacing: 1px
+      text-align: left
+
+  &__content
+    display: flex
+    flex-direction: column
+    width: 100%
+    padding: 0
+    gap: 30px
+
+  &__image-section
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100%
+    
+    .profile-form__image-card
+      background: $secondary-color
+      border-radius: 25px
+      padding: 30px 15px
+      text-align: center
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+      min-height: 280px
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      width: 100%
+      max-width: 350px
+      margin: 0 auto
+      gap: 20px
+
+      .profile-form__image-title
+        font-size: 20px
+        color: $primary-color
+        margin: 0 0 20px 0
+        text-align: center
+        font-family: $font-family-primary
+        font-weight: 400
+
+      .profile-form__image-container
+        margin-bottom: 20px
+        flex: 1
+        display: flex
+        align-items: center
+        justify-content: center
+        
+        .profile-form__image-placeholder
+          width: 150px
+          height: 150px
+          border-radius: 50%
+          background: #e3f2fd
+          display: flex
+          align-items: center
+          justify-content: center
+          margin: 0 auto
+          border: 3px solid $primary-color
+          background-color: white
+
+        .profile-form__placeholder-icon
+          font-size: 60px
+          width: 60px
+          height: 60px
+          color: white
+
+        .profile-form__image
+          width: 150px
+          height: 150px
+          border-radius: 50%
+          object-fit: cover
+          border: 14px solid white
+          background-color: #E7EFF5
+
+      .profile-form__upload-section
+        .profile-form__upload-button
+          width: 100%
+          margin-bottom: 10px
+          color: $text-light
+          border-color: $text-light
+          border-style: dashed
+          min-height: 70px
+          font-size: 14px
+          font-weight: 500
+          background: white
+          border-radius: 8px
+          text-transform: none
+          font-family: $font-family-primary
+
+        .profile-form__upload-button-text
+          display: flex
+          align-items: center
+          justify-content: space-between
+
+        .profile-form__file-info
+          display: flex
+          align-items: center
+          justify-content: space-between
+          background: white
+          padding: 10px 12px
+          border-radius: 6px
+          border: 1px dashed #ccc
+          margin-top: 10px
+          font-family: $font-family-primary
+          color: $text-light
+          
+          .profile-form__file-name
+            font-size: 12px
+            color: $text-light !important
+            flex: 1
+            font-weight: 500
+            display: flex
+            align-items: center
+            justify-content: space-between
+
+          .profile-form__remove-button
+            color: $error-color
+            margin-left: 8px
+
+  &__info-section
+    width: 100%
+    padding: 0
+
+    .profile-form__info-title
+      font-size: 20px
+      font-weight: 400
+      color: $primary-color
+      margin: 0 0 8px
+      line-height: 1.3
+      text-align: center
+
+    .profile-form__info-subtitle
+      font-size: 14px
+      color: $text-color
+      margin: 0 0 20px 0
+      line-height: 1.4
+      font-weight: 300
+      text-align: center
+
+    .profile-form__form
+      width: 100%
+      
+      .profile-form__field
+        width: 100%
+        margin-bottom: 15px
+        
+        // Angular Material form field styling
+        ::ng-deep .mat-mdc-form-field
+          width: 100%
+          
+        ::ng-deep .mat-mdc-text-field-wrapper
+          background: white
+          
+        ::ng-deep .mat-mdc-form-field-focus-overlay
+          background: white
+          
+        // Error state styling
+        ::ng-deep &.mat-form-field-invalid .mat-mdc-form-field-focus-overlay
+          background: white
+          
+        ::ng-deep &.mat-form-field-invalid .mdc-notched-outline__leading,
+        ::ng-deep &.mat-form-field-invalid .mdc-notched-outline__notch,
+        ::ng-deep &.mat-form-field-invalid .mdc-notched-outline__trailing
+          border-color: $error-color !important
+          
+        // Error text styling
+        ::ng-deep .mat-mdc-form-field-subscript-wrapper
+          .mat-mdc-form-field-error-wrapper
+            .mat-mdc-form-field-error
+              color: $error-color
+              font-size: 12px
+              margin-top: 4px
+
+      .profile-form__submit-button
+        width: 100%
+        margin-top: 20px
+        height: 44px
+        font-size: 14px
+        font-weight: 500
+        background-color: #f0f0f0
+        color: $text-color
+        border: none
+        border-radius: 8px
+        text-transform: none
+        box-shadow: none
+        margin: 0 auto
+        display: block
+
+  &__file-name
+    color: $text-color !important
+
+// Tablet and up
+@media (min-width: $breakpoint-sm)
+  .profile-form
+    margin-top: 30px
+    
+    &__content
+      gap: 40px
+
+    &__header
+      margin-bottom: 30px
+      text-align: left
+      
+      .profile-form__back-button
+        position: absolute
+        left: 0
+        top: 0
+        margin-bottom: 0
+
+      .profile-form__title
+        font-size: 28px
+        text-align: left
+
+      .profile-form__subtitle
+        text-align: left
+
+    &__image-section
+      .profile-form__image-card
+        min-height: 320px
+        padding: 40px 20px
+        max-width: 400px
+        border-radius: 30px
+
+      .profile-form__image-container
+        .profile-form__image,
+        .profile-form__image-placeholder
+          width: 200px
+          height: 200px
+
+      .profile-form__image-title
+        font-size: 24px
+
+    &__info-section
+      .profile-form__info-title
+        font-size: 24px
+        text-align: left
+
+      .profile-form__info-subtitle
+        font-size: 16px
+        text-align: left
+
+      .profile-form__form
+        .profile-form__field
+          margin-bottom: 20px
+
+        .profile-form__submit-button
+          height: 48px
+          font-size: 16px
+          width: 100%
+
+// Desktop and up
+@media (min-width: $breakpoint-md)
+  .profile-form
+    padding: 0 50px
+    margin-top: 50px
+    
+    &__content
+      display: flex
+      flex-direction: row
+      justify-content: space-evenly
+      align-items: flex-start
+      // padding: 0 150px
+      // gap: 80px
+
+    &__header
+      margin-bottom: 40px
+      
+      .profile-form__title
+        font-size: 35px
+
+      .profile-form__subtitle
+        font-size: 16px
+
+    &__image-section
+      width: auto
+      .profile-form__image-card
+        min-height: 400px
+        padding: 60px 30px
+        border-radius: 50px
+        // max-width: none
+        min-width: 330px
+
+      .profile-form__image-container
+        .profile-form__image,
+        .profile-form__image-placeholder
+          width: 269px
+          height: 269px
+
+      .profile-form__image-title
+        font-size: 30px !important
+        font-weight: 400
+
+    &__info-section
+      max-width: 380px
+      justify-self: center
+      align-self: center
+
+      .profile-form__info-title
+        font-size: 30px
+
+      .profile-form__info-subtitle
+        font-size: 18px
+        margin-bottom: 30px
+
+      .profile-form__form
+        .profile-form__submit-button
+          width: 80%
+    

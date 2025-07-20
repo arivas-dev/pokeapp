@@ -1,1 +1,106 @@
-<p>profile-form works!</p>
+<div class="profile-form">
+    <div class="profile-form__header">
+
+        <h1 class="profile-form__title">
+            <button mat-icon-button class="profile-form__back-button">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <strong>¡Hola!</strong> Configuremos tu perfil</h1>
+        <p class="profile-form__subtitle">Queremos conocerte mejor.</p>
+    </div>
+
+    <div class="profile-form__content">
+        <!-- Left Column: Profile Image -->
+        <div class="profile-form__image-section">
+            <div class="profile-form__image-card">
+                <h3 class="profile-form__image-title">Imágen perfil</h3>
+
+                <div class="profile-form__image-container">
+                    <img *ngIf="profileImage" [src]="profileImage" alt="Profile" class="profile-form__image">
+                    <img *ngIf="!profileImage" src="assets/profile-placeholder.png" alt="Profile"
+                        class="profile-form__image profile-form__image-placeholder">
+                </div>
+
+                <div class="profile-form__upload-section">
+                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*"
+                        class="profile-form__file-input" style="display: none;">
+                    <button mat-stroked-button (click)="fileInput.click()" class="profile-form__upload-button"
+                        *ngIf="!selectedFileName">
+                        <span class="profile-form__upload-button-text material-symbols-outlined">
+                            Adjunta un foto
+                            <mat-icon>cloud_upload</mat-icon>
+                        </span>
+                    </button>
+
+                    <div *ngIf="selectedFileName" class="profile-form__file-info">
+                        <span class="profile-form__file-name">{{ selectedFileName }}</span>
+                        <button mat-icon-button (click)="removeImage()" class="profile-form__remove-button">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Personal Information -->
+        <div class="profile-form__info-section">
+            <h3 class="profile-form__info-title">Tu información</h3>
+            <p class="profile-form__info-subtitle">Completa la siguiente información para completar tu perfil</p>
+
+            <form [formGroup]="profileForm" class="profile-form__form">
+                <mat-form-field appearance="outline" class="profile-form__field">
+                    <mat-label>Nombre *</mat-label>
+                    <input matInput formControlName="name" placeholder="Ingresa tu nombre" size="small">
+                    <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
+                        El nombre es requerido
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="profile-form__field">
+                    <mat-label>Pasatiempo favorito</mat-label>
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let hobby of selectedHobbies; let i = index" [removable]="true">
+                            {{ hobby }}
+                            <mat-icon matChipRemove (click)="removeHobbyByIndex(i)">cancel</mat-icon>
+                        </mat-chip>
+                        <input #hobbyInput matInput [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                            (matChipInputTokenEnd)="addHobby($event)" placeholder="">
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                        <mat-option *ngFor="let hobby of filteredHobbies | async" [value]="hobby">
+                            {{ hobby }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="profile-form__field">
+                    <mat-label>Cumpleaños *</mat-label>
+                    <input matInput [matDatepicker]="birthdayPicker" formControlName="birthday"
+                        placeholder="Selecciona tu fecha de nacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #birthdayPicker></mat-datepicker>
+                    <mat-error *ngIf="profileForm.get('birthday')?.hasError('required')">
+                        La fecha de nacimiento es requerida
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="profile-form__field">
+                    <mat-label>Documento *</mat-label>
+                    <input matInput formControlName="document" placeholder="DUI o Carnet de minoridad"
+                        (input)="formatDocument($event)">
+                    <mat-error *ngIf="profileForm.get('document')?.hasError('required')">
+                        El documento es requerido
+                    </mat-error>
+                    <mat-error *ngIf="profileForm.get('document')?.hasError('invalidFormat')">
+                        Formato de documento inválido
+                    </mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button (click)="onSubmit()" [disabled]="!profileForm.valid"
+                    class="profile-form__submit-button">
+                    Continuar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

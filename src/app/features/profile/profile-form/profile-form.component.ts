@@ -1,15 +1,281 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, map, startWith } from 'rxjs/operators';
+
+interface TrainerProfile {
+  name: string;
+  hobbies?: string[];
+  birthday: Date;
+  document: string;
+  profileImage?: string;
+}
 
 @Component({
   selector: 'app-profile-form',
   templateUrl: './profile-form.component.html',
   styleUrls: ['./profile-form.component.sass']
 })
-export class ProfileFormComponent implements OnInit {
+export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('hobbyInput', { static: false }) hobbyInput!: ElementRef;
+  
+  profileForm!: FormGroup;
+  profileImage: string | null = null;
+  selectedFileName: string | null = null;
+  selectedHobbies: string[] = [];
+  filteredHobbies: Observable<string[]> = new Observable<string[]>();
+  
+  private readonly destroy$ = new Subject<void>();
 
-  constructor() { }
+  // List of suggested hobbies
+  private readonly hobbies: string[] = [
+    'Jugar Fútbol',
+    'Jugar Basquetball',
+    'Jugar Tennis',
+    'Jugar Voleibol',
+    'Jugar Fifa',
+    'Jugar Videojuegos'
+  ];
+
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.initializeForm();
+    this.setupHobbyAutocomplete();
   }
 
+  ngAfterViewInit(): void {
+    // Focus the input initially
+    // this.focusInput();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Initialize the profile form with validations
+   */
+  private initializeForm(): void {
+    this.profileForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      hobby: [''], // Input for search
+      birthday: ['', [Validators.required, this.ageValidator.bind(this)]],
+      document: ['', [Validators.required, this.documentValidator.bind(this)]]
+    });
+  }
+
+  /**
+   * Setup autocomplete for hobby field
+   */
+  private setupHobbyAutocomplete(): void {
+    const hobbyControl = this.profileForm.get('hobby');
+    if (hobbyControl) {
+      this.filteredHobbies = hobbyControl.valueChanges.pipe(
+        startWith(''),
+        map((value: string) => this.filterHobbies(value)),
+        takeUntil(this.destroy$)
+      );
+    }
+  }
+
+  /**
+   * Filter hobbies based on input value
+   */
+  private filterHobbies(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.hobbies.filter(hobby => 
+      hobby.toLowerCase().includes(filterValue) && 
+      !this.selectedHobbies.includes(hobby)
+    );
+  }
+
+  /**
+   * Add hobby from chip input
+   */
+  addHobby(event: any): void {
+    const value = (event.value || '').trim();
+    if (value && !this.selectedHobbies.includes(value)) {
+      this.selectedHobbies.push(value);
+    }
+    // Clear input after adding
+    event.chipInput!.clear();
+    this.profileForm.get('hobby')?.setValue('');
+    // Focus input after adding
+    setTimeout(() => this.focusInput(), 100);
+  }
+
+  /**
+   * Remove hobby from chips by index
+   */
+  removeHobbyByIndex(index: number): void {
+    if (index >= 0 && index < this.selectedHobbies.length) {
+      this.selectedHobbies.splice(index, 1);
+      
+      // Trigger autocomplete update
+      const hobbyControl = this.profileForm.get('hobby');
+      if (hobbyControl) {
+        hobbyControl.setValue(hobbyControl.value);
+      }
+      
+      // Focus input after removing
+      setTimeout(() => this.focusInput(), 100);
+    }
+  }
+
+  /**
+   * Handle option selection from autocomplete
+   */
+  onOptionSelected(event: any): void {
+    const hobby = event.option.value;
+    if (!this.selectedHobbies.includes(hobby)) {
+      this.selectedHobbies.push(hobby);
+    }
+    // Clear input after selecting
+    this.profileForm.get('hobby')?.setValue('');
+    
+    // Focus input after selecting
+    setTimeout(() => this.focusInput(), 100);
+  }
+
+  /**
+   * Custom validator for age (must be 18+ for DUI)
+   */
+  private ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    if (!control.value) return null;
+    
+    const birthday = new Date(control.value);
+    const today = new Date();
+    let age = today.getFullYear() - birthday.getFullYear();
+    const monthDiff = today.getMonth() - birthday.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+    }
+    
+    return age >= 0 ? null : { invalidAge: true };
+  }
+
+  /**
+   * Custom validator for document format
+   */
+  private documentValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    if (!control.value) return null;
+    
+    const document = control.value.replace(/[-\s]/g, '');
+    
+    // DUI format: 8 digits + 1 digit
+    const duiPattern = /^\d{8}\d{1}$/;
+    
+    // Carnet de minoridad format: variable length
+    const carnetPattern = /^\d{6,10}$/;
+    
+    if (duiPattern.test(document) || carnetPattern.test(document)) {
+      return null;
+    }
+    
+    return { invalidFormat: true };
+  }
+
+  /**
+   * Format document input with hyphens
+   */
+  formatDocument(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/[^\d]/g, '');
+    
+    // Add hyphens for DUI format
+    if (value.length >= 8) {
+      value = value.slice(0, 8) + '-' + value.slice(8);
+    }
+    
+    this.profileForm.patchValue({ document: value });
+  }
+
+  /**
+   * Handle file selection for profile image
+   */
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file.');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 500 * 1024 * 1024) {
+      alert('File is too large. Maximum 5MB.');
+      return;
+    }
+
+    this.selectedFileName = file.name;
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.profileImage = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /**
+   * Remove selected image
+   */
+  removeImage(): void {
+    this.profileImage = null;
+    this.selectedFileName = null;
+  }
+
+  /**
+   * Handle form submission
+   */
+  onSubmit(): void {
+    if (this.profileForm.valid) {
+      const profileData: TrainerProfile = {
+        name: this.profileForm.get('name')?.value,
+        hobbies: this.selectedHobbies,
+        birthday: this.profileForm.get('birthday')?.value,
+        document: this.profileForm.get('document')?.value,
+        profileImage: this.profileImage || undefined
+      };
+
+      // Save to localStorage for now (later we'll use a service)
+      localStorage.setItem('trainerProfile', JSON.stringify(profileData));
+      
+      // Navigate to next step
+      this.router.navigate(['/pokemon-team']);
+    } else {
+      this.markFormGroupTouched();
+    }
+  }
+
+  /**
+   * Mark all form controls as touched to show validation errors
+   */
+  private markFormGroupTouched(): void {
+    Object.keys(this.profileForm.controls).forEach(key => {
+      const control = this.profileForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  /**
+   * Focus the input field
+   */
+  private focusInput(): void {
+    if (this.hobbyInput && this.hobbyInput.nativeElement) {
+      this.hobbyInput.nativeElement.focus();
+      // Move cursor to end of input
+      const input = this.hobbyInput.nativeElement;
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+  }
 }

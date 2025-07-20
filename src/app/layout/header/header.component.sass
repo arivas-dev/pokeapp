@@ -1,23 +1,31 @@
+@import '../../../styles/variables'
+
 .header
   background: white
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
-  padding: 0 20px
+  padding: 0
   position: sticky
   top: 0
   z-index: 1000
+  width: 100%
+  box-sizing: border-box
+  
 
   &__content
     display: flex
     justify-content: space-between
     align-items: center
-    max-width: 1200px
     margin: 0 auto
     height: 70px
+    padding: 0 15px
+    max-width: 100%
+    box-sizing: border-box
 
   &__logo-container
     .header__pokemon-logo
       height: 40px
       width: auto
+      margin-left: 0.8em
 
   &__navigation
     display: flex
@@ -34,3 +42,7 @@
       font-size: 20px
       width: 20px
       height: 20px
+
+@media (min-width: $breakpoint-lg)
+  .header
+    padding: 0 50px
