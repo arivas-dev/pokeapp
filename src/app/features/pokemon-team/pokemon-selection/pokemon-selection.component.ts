@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon, PokemonService } from '../../shared/pokemon.service';
+import { TrainerStore } from '../../../store/trainer';
 
 interface ProfileInfo {
   name?: string;
@@ -33,7 +34,8 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private pokemonService: PokemonService,
-    private router: Router
+    private router: Router,
+    private trainerStore: TrainerStore
   ) { }
 
   ngOnInit(): void {
@@ -102,11 +104,13 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   onPokemonSelected(pokemon: Pokemon): void {
     pokemon.selected = true;
     this.selectedPokemon.push(pokemon);
+    this.trainerStore.selectPokemon(pokemon);
   }
 
   onPokemonDeselected(pokemon: Pokemon): void {
     pokemon.selected = false;
     this.selectedPokemon = this.selectedPokemon.filter(p => p.id !== pokemon.id);
+    this.trainerStore.deselectPokemon(pokemon.id);
   }
 
   onBackClick(): void {
@@ -116,14 +120,18 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   onSave(): void {
     console.log('Selected Pokémon:', this.selectedPokemon);
     
-    // Save selected Pokémon to localStorage
-    localStorage.setItem('selectedPokemon', JSON.stringify(this.selectedPokemon));
+    // Update store with selected Pokémon
+    this.trainerStore.setSelectedPokemon(this.selectedPokemon);
+    
+    // Set loading state
+    this.trainerStore.setLoading(true);
     
     // Navigate to loading screen first, then to dashboard
     this.router.navigate(['/loading']);
     
     // Simulate loading time and then navigate to dashboard
     setTimeout(() => {
+      this.trainerStore.setLoading(false);
       this.router.navigate(['/dashboard']);
     }, 3000); // 3 seconds loading time
   }

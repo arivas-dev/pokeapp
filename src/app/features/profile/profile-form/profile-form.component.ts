@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, map, startWith } from 'rxjs/operators';
+import { TrainerStore, TrainerProfile as StoreTrainerProfile } from '../../../store/trainer';
 
 interface TrainerProfile {
   name: string;
@@ -40,7 +41,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly trainerStore: TrainerStore
   ) {}
 
   ngOnInit(): void {
@@ -248,8 +250,17 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
         profileImage: this.profileImage || undefined
       };
 
-      // Save to localStorage
-      localStorage.setItem('trainerProfile', JSON.stringify(profileData));
+      // Convert to store format
+      const storeProfile: StoreTrainerProfile = {
+        name: profileData.name,
+        hobby: profileData.hobbies?.join(', ') || '',
+        age: this.calculateAge(profileData.birthday) + ' años',
+        document: profileData.document,
+        profileImage: profileData.profileImage
+      };
+
+      // Update store
+      this.trainerStore.updateProfile(storeProfile);
       
       // Navigate to loading screen first
       this.router.navigate(['/loading']);
@@ -278,6 +289,21 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
       const input = this.hobbyInput.nativeElement;
       input.setSelectionRange(input.value.length, input.value.length);
     }
+  }
+
+  /**
+   * Calculate age from birthday
+   */
+  private calculateAge(birthday: Date): number {
+    const today = new Date();
+    let age = today.getFullYear() - birthday.getFullYear();
+    const monthDiff = today.getMonth() - birthday.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+    }
+    
+    return age;
   }
 
   /**

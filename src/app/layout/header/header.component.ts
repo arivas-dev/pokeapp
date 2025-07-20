@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { TrainerStore } from '../../store/trainer';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
   trainerName: string = 'José';
 
-  constructor() { }
+  constructor(private trainerStore: TrainerStore) { }
 
   ngOnInit(): void {
-    // Load trainer name from localStorage if available
-    const trainerProfileData = localStorage.getItem('trainerProfile');
-    if (trainerProfileData) {
-      try {
-        const profileData = JSON.parse(trainerProfileData);
-        this.trainerName = profileData.name || 'José';
-      } catch (error) {
-        console.error('Error parsing trainer profile data:', error);
+    // Subscribe to trainer profile from store
+    this.trainerStore.profile$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((profile: any) => {
+      if (profile) {
+        this.trainerName = profile.name;
       }
-    }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onProfileDropdown(): void {
