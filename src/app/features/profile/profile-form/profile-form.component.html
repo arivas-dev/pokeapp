@@ -54,7 +54,7 @@
                 <mat-form-field appearance="outline" class="profile-form__field">
                     <mat-label>Cumpleaños *</mat-label>
                     <input matInput [matDatepicker]="birthdayPicker" formControlName="birthday"
-                        placeholder="Selecciona tu fecha de nacimiento">
+                        placeholder="Selecciona tu fecha de nacimiento" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
                     <mat-datepicker #birthdayPicker></mat-datepicker>
                     <mat-error *ngIf="profileForm.get('birthday')?.hasError('required')">

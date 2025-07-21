@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Pokemon } from '../../shared/pokemon.service';
 import { TrainerStore } from '../../../store/trainer';
 import { translateType } from '../../shared/pokemon.service';
+import { Router } from '@angular/router';
 
 interface TrainerProfile {
   name: string;
@@ -33,7 +34,8 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
   translateType = translateType;
 
   constructor(
-    private trainerStore: TrainerStore
+    private trainerStore: TrainerStore,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -60,13 +62,11 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
   }
 
   onEditProfile(): void {
-    console.log('Edit profile clicked');
-    // TODO: Navigate to profile form
+    this.router.navigate(['/profile']);
   }
 
   onEditPokemon(): void {
-    console.log('Edit Pokémon clicked');
-    // TODO: Navigate to Pokémon selection
+    this.router.navigate(['/pokemon-team']);
   }
 
   onSearch(): void {
@@ -77,6 +77,10 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
   onProfileDropdown(): void {
     console.log('Profile dropdown clicked');
     // TODO: Show profile dropdown menu
+  }
+
+  get profileFirstName(): string {
+    return this.trainerProfile.name.split(' ')[0];
   }
 
 

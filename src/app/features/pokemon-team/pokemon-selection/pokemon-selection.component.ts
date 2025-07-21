@@ -40,7 +40,14 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loadPokemon();
+    // 1. Suscríbete a los seleccionados
+    this.trainerStore.selectedPokemon$.subscribe(selected => {
+      this.selectedPokemon = selected;
+      this.syncSelectedState();
+    });
+
+    // 2. Carga la lista de Pokémon (puede ser asíncrono)
+    this.loadPokemonList();
 
     this.trainerStore.profile$.pipe(takeUntil(this.destroy$)).subscribe((profile) => {
       if (profile) {
@@ -77,6 +84,22 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       });
+  }
+
+  loadPokemonList() {
+    // Supón que esto es asíncrono
+    this.pokemonService.getPokemonList().subscribe(list => {
+      this.pokemonList = list;
+      this.syncSelectedState();
+    });
+  }
+
+  syncSelectedState() {
+    if (!this.pokemonList.length) return;
+    const selectedIds = new Set(this.selectedPokemon.map(p => p.id));
+    this.pokemonList.forEach(p => {
+      p.selected = selectedIds.has(p.id);
+    });
   }
 
   /**
