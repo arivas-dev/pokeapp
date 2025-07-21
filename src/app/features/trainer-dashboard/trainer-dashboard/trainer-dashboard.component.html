@@ -3,7 +3,7 @@
 
   <!-- Main Content -->
   <div class="trainer-dashboard__content">
-    
+
     <!-- Left Section - Trainer Profile -->
     <section class="trainer-dashboard__profile-section">
       <div class="trainer-dashboard__profile-header-row">
@@ -13,16 +13,14 @@
           Editar perfil
         </button>
       </div>
-     
+
       <app-profile-image-card [image]="trainerProfile.profileImage || null" [showInfo]="true" [isEditMode]="false"
-        [showDashboardHeader]="true"
-        [profileInfo]="{
+        [showDashboardHeader]="true" [profileInfo]="{
           name: trainerProfile.name,
           hobby: trainerProfile.hobby,
           age: trainerProfile.age,
           document: trainerProfile.document
-        }"
-        class="trainer-dashboard__profile-card">
+        }" class="trainer-dashboard__profile-card">
       </app-profile-image-card>
     </section>
 
@@ -36,67 +34,47 @@
         </button>
       </div>
 
-      <div class="trainer-dashboard__pokemon-grid">
-        <div class="trainer-dashboard__pokemon-card" *ngFor="let pokemon of selectedPokemon">
-          <div class="trainer-dashboard__pokemon-card-row">
-            <div class="trainer-dashboard__pokemon-card-left">
+      <swiper
+        [slidesPerView]="1"
+        [spaceBetween]="0"
+        [navigation]="true"
+        [pagination]="{ clickable: true }"
+        class="dashboard-pokemon-swiper"
+      >
+        <ng-template swiperSlide *ngFor="let pokemon of selectedPokemon">
+          <div class="trainer-dashboard__pokemon-card">
+            <div class="trainer-dashboard__pokemon-card-row">
+              <div class="trainer-dashboard__pokemon-card-left">
                 <img [src]="pokemon.image" [alt]="pokemon.name" class="trainer-dashboard__pokemon-image">
-              <div class="trainer-dashboard__pokemon-info-block">
-                <div class="trainer-dashboard__pokemon-name">{{ pokemon.name }}</div>
-                <div class="trainer-dashboard__pokemon-types">
-                  {{ pokemon.types.map(translateType).join('/') }}
+                <div class="trainer-dashboard__pokemon-info-block">
+                  <div class="trainer-dashboard__pokemon-name">{{ pokemon.name }}</div>
+                  <div class="trainer-dashboard__pokemon-types">
+                    {{ pokemon.types.map(translateType).join('/') }}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="trainer-dashboard__pokemon-card-right">
-              <div class="trainer-dashboard__pokemon-stats">
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">HP</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.hp / 255) * 100"></div> 
-                  </div>
-                </div>
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">Ataque</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.attack / 190) * 100"></div>
-                  </div>
-                </div>
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">Defensa</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.defense / 230) * 100"></div>
-                  </div>
-                </div>
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">Ataque Especial</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.specialAttack / 194) * 100"></div>
-                  </div>
-                </div>
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">Defensa Especial</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.specialDefense / 230) * 100"></div>
-                  </div>
-                </div>
-                <div class="trainer-dashboard__stat-item">
-                  <span class="trainer-dashboard__stat-label">Velocidad</span>
-                  <div class="trainer-dashboard__stat-bar">
-                    <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
-                      [style.width.%]="(pokemon.stats.speed / 180) * 100"></div>
+              <div class="trainer-dashboard__pokemon-card-right">
+                <div class="trainer-dashboard__pokemon-stats">
+                  <div class="trainer-dashboard__stat-item" *ngFor="let stat of [
+                    {label: 'HP', value: pokemon.stats.hp, max: 255},
+                    {label: 'Ataque', value: pokemon.stats.attack, max: 190},
+                    {label: 'Defensa', value: pokemon.stats.defense, max: 230},
+                    {label: 'Ataque Especial', value: pokemon.stats.specialAttack, max: 194},
+                    {label: 'Defensa Especial', value: pokemon.stats.specialDefense, max: 230},
+                    {label: 'Velocidad', value: pokemon.stats.speed, max: 180}
+                  ]">
+                    <span class="trainer-dashboard__stat-label">{{ stat.label }}</span>
+                    <div class="trainer-dashboard__stat-bar">
+                      <div class="trainer-dashboard__stat-fill trainer-dashboard__stat-fill--{{pokemon.types[0].toLowerCase()}}"
+                        [style.width.%]="(stat.value / stat.max) * 100"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </ng-template>
+      </swiper>
     </section>
   </div>
 </div>

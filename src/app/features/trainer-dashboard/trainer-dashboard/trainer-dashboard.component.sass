@@ -231,6 +231,7 @@
 
   &__pokemon-stats
     width: 100%
+    min-width: 0
     display: flex
     flex-direction: column
     gap: 8px
@@ -251,7 +252,8 @@
     font-weight: 300
 
   &__stat-bar
-    flex: 1
+    width: 100%
+    min-width: 0
     height: 8px
     border-radius: 8px
     overflow: hidden
@@ -282,7 +284,6 @@
       flex-direction: row
       gap: 20px
       padding: 30px 20px
-      max-width: 1200px
       margin: 0 auto
     &__profile-section
       flex: 0 0 350px
@@ -319,7 +320,6 @@
       font-size: 14px
     &__pokemon-section
       padding-top: 80px
-      width: 100% 
       padding-left: 0
       padding-right: 0
     &__pokemon-header
@@ -388,3 +388,105 @@
 //   // Para Firefox
 //   scrollbar-width: thin
 //   scrollbar-color: #e0e0e0 transparent
+
+.dashboard-pokemon-swiper
+  width: 100%
+  max-width: 800px
+  margin: 0 auto
+  .swiper-wrapper
+    width: 100%
+    height: 100%
+  .swiper-slide
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100% !important
+    max-width: 100% !important
+    min-width: 0 !important
+    height: auto !important
+    padding: 0 !important
+
+.trainer-dashboard__pokemon-card
+  width: 100%
+  // max-width: 500px
+  margin: 0 auto
+  padding: 32px 24px
+  box-sizing: border-box
+  background: #f7f7f7
+  border-radius: 32px
+  display: flex
+  flex-direction: row
+  align-items: stretch
+  gap: 32px
+
+.trainer-dashboard__pokemon-card-row
+  width: 100%
+  min-width: 0
+  display: flex
+  flex-direction: row
+  align-items: stretch
+  gap: 32px
+
+.trainer-dashboard__pokemon-card-left,
+.trainer-dashboard__pokemon-card-right
+  width: 50%
+  min-width: 0
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+.trainer-dashboard__pokemon-image
+  width: 160px
+  height: 160px
+  object-fit: contain
+  margin: 0 auto 16px auto
+
+.trainer-dashboard__pokemon-info-block
+  text-align: center
+
+.trainer-dashboard__pokemon-name
+  font-size: 2.2rem
+  font-weight: 700
+  color: #222
+
+.trainer-dashboard__pokemon-types
+  font-size: 1.2rem
+  color: #888
+  margin-bottom: 8px
+
+.trainer-dashboard__pokemon-stats
+  width: 100%
+  min-width: 0
+  display: flex
+  flex-direction: column
+  gap: 14px
+
+.trainer-dashboard__stat-item
+  display: flex
+  align-items: center
+  gap: 12px
+
+.trainer-dashboard__stat-label
+  font-size: 1.1rem
+  min-width: 120px
+
+.trainer-dashboard__stat-bar
+  height: 10px
+
+// Colores de tipo
+.trainer-dashboard__stat-fill--grass
+  background-color: #7ED876
+.trainer-dashboard__stat-fill--fire
+  background-color: #ffd600
+.trainer-dashboard__stat-fill--water
+  background-color: #2196f3
+.trainer-dashboard__stat-fill--electric
+  background-color: #ff7043
+.trainer-dashboard__stat-fill--psychic
+  background-color: #ab47bc
+.trainer-dashboard__stat-fill--rock
+  background-color: #ffb300
+
+@media (min-width: $breakpoint-md)
+  .trainer-dashboard__pokemon-card
+    min-height: 400px

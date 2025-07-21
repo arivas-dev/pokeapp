@@ -51,7 +51,6 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
     this.trainerStore.selectedPokemon$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((pokemon: Pokemon[]) => {
-      console.log("🚀 ~ TrainerDashboardComponent ~ ).subscribe ~ pokemon:", pokemon)
       this.selectedPokemon = pokemon;
     });
   }

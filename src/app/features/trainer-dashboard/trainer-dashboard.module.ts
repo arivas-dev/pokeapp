@@ -1,19 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-
-// Angular Material imports
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-
-// Shared module
-import { SharedModule } from '../shared/shared.module';
-
-// Layout module
-import { LayoutModule } from '../../layout/layout.module';
-
-// Components
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
+import { SharedModule } from '../shared/shared.module';
+import { SwiperModule } from 'swiper/angular'; // <-- Importa SwiperModule
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -28,11 +19,13 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    MatIconModule,
-    MatButtonModule,
     SharedModule,
-    LayoutModule
+    SwiperModule, // <-- Agrega SwiperModule aquí
+    MatIconModule,
+    RouterModule.forChild(routes)
+  ],
+  exports: [
+    TrainerDashboardComponent
   ]
 })
 export class TrainerDashboardModule { }
