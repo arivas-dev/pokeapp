@@ -10,8 +10,9 @@
         <!-- Left Section: Profile Card -->
         <div class="pokemon-selection__profile-section">
             <app-profile-image-card
-                [image]="'assets/profile-placeholder.png'"
+                [image]="profileInfo.image || 'assets/profile-placeholder.png'"
                 [showInfo]="true"
+                [showName]="true"
                 [isEditMode]="false"
                 [profileInfo]="profileInfo">
             </app-profile-image-card>

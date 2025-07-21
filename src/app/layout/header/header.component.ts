@@ -40,33 +40,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.header__profile-container')) {
-      this.isProfileMenuOpen = false;
-    }
-  }
-
   toggleProfileMenu(): void {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
   }
 
   onEditProfile(): void {
-    console.log('Edit profile clicked');
     this.isProfileMenuOpen = false;
     this.router.navigate(['/profile']);
   }
 
   onLogout(): void {
-    console.log('Logout clicked');
     this.isProfileMenuOpen = false;
-    
-    // Reset store state
     this.trainerStore.reset();
-    
-    // Navigate to profile page (login)
     this.router.navigate(['/profile']);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.header__profile-btn-container')) {
+      this.isProfileMenuOpen = false;
+    }
   }
 
   onSearch(): void {

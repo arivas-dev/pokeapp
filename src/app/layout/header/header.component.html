@@ -5,13 +5,10 @@
     </div>
     
     <div class="header__right" *ngIf="hasProfile">
-      <div class="header__profile-container">
-        <button class="header__profile-dropdown" (click)="toggleProfileMenu()">
+      <div class="header__profile-btn-container">
+        <button class="header__profile-btn" (click)="toggleProfileMenu()">
           {{ trainerName }}
-          <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
-        
-        <!-- Profile Dropdown Menu -->
         <div class="header__profile-menu" *ngIf="isProfileMenuOpen">
           <div class="header__menu-item" (click)="onEditProfile()">
             <mat-icon>edit</mat-icon>
@@ -23,7 +20,6 @@
           </div>
         </div>
       </div>
-      
       <button class="header__search-btn" (click)="onSearch()">
         <mat-icon>search</mat-icon>
       </button>

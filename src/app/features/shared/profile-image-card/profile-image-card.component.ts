@@ -17,11 +17,27 @@ export class ProfileImageCardComponent {
   @Input() fileName: string | null = null;
   @Input() showFile: boolean = false;
   @Input() showInfo: boolean = false;
+  @Input() showName: boolean = false;
   @Input() profileInfo: ProfileInfo = {};
   @Input() isEditMode: boolean = true;
+  @Input() showDashboardHeader: boolean = false;
   
   @Output() fileSelected = new EventEmitter<Event>();
   @Output() fileRemoved = new EventEmitter<void>();
+
+  get documentLabel(): string {
+    // Si no hay edad, default a DUI
+    if (!this.profileInfo.age) return 'Carnet de minoridad';
+
+    return this.isAdult() ? 'DUI' : 'Carnet de minoridad';
+  }
+
+  isAdult(): boolean {
+    if (!this.profileInfo.age) return false;
+    const match = /([0-9]+)/.exec(this.profileInfo.age);
+    const age = match ? parseInt(match[1], 10) : 0;
+    return age >= 18;
+  }
 
   onFileSelected(event: Event): void {
     this.fileSelected.emit(event);

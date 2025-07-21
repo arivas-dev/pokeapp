@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon } from '../../shared/pokemon.service';
 import { TrainerStore } from '../../../store/trainer';
+import { translateType } from '../../shared/pokemon.service';
 
 interface TrainerProfile {
   name: string;
@@ -29,6 +30,7 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
   };
 
   selectedPokemon: Pokemon[] = [];
+  translateType = translateType;
 
   constructor(
     private trainerStore: TrainerStore
@@ -47,6 +49,7 @@ export class TrainerDashboardComponent implements OnInit, OnDestroy {
     this.trainerStore.selectedPokemon$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((pokemon: Pokemon[]) => {
+      console.log("🚀 ~ TrainerDashboardComponent ~ ).subscribe ~ pokemon:", pokemon)
       this.selectedPokemon = pokemon;
     });
   }

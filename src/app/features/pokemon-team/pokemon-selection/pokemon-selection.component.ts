@@ -10,6 +10,7 @@ interface ProfileInfo {
   hobby?: string;
   age?: string;
   document?: string;
+  image?: string;
 }
 
 @Component({
@@ -24,7 +25,7 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
     name: 'José Sosa',
     hobby: 'Ver Series',
     age: '18 años',
-    document: '05643215-9'
+    document: '05643215-9',
   };
 
   pokemonList: Pokemon[] = [];
@@ -40,6 +41,18 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadPokemon();
+
+    this.trainerStore.profile$.pipe(takeUntil(this.destroy$)).subscribe((profile) => {
+      if (profile) {
+        this.profileInfo = {
+          name: profile.name,
+          hobby: profile.hobby,
+          age: profile.age,
+          document: profile.document,
+          image: profile.profileImage
+        };
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -119,16 +132,16 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
 
   onSave(): void {
     console.log('Selected Pokémon:', this.selectedPokemon);
-    
+
     // Update store with selected Pokémon
     this.trainerStore.setSelectedPokemon(this.selectedPokemon);
-    
+
     // Set loading state
     this.trainerStore.setLoading(true);
-    
+
     // Navigate to loading screen first, then to dashboard
     this.router.navigate(['/loading']);
-    
+
     // Simulate loading time and then navigate to dashboard
     setTimeout(() => {
       this.trainerStore.setLoading(false);

@@ -90,6 +90,14 @@
         box-shadow: none
         margin: 0 auto
         display: block
+        &:not(:disabled)
+          background-color: $primary-color
+          color: white
+          cursor: pointer
+
+        &:disabled
+          opacity: 0.5
+          cursor: not-allowed
 
 // Tablet and up
 @media (min-width: $breakpoint-sm)

@@ -13,6 +13,31 @@ interface TrainerProfile {
   profileImage?: string;
 }
 
+function createThumbnail(file: File, size = 100, quality = 0.7): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      img.src = e.target.result;
+    };
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      ctx!.fillStyle = '#fff';
+      ctx!.fillRect(0, 0, size, size);
+      const min = Math.min(img.width, img.height);
+      const sx = (img.width - min) / 2;
+      const sy = (img.height - min) / 2;
+      ctx!.drawImage(img, sx, sy, min, min, 0, 0, size, size);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 @Component({
   selector: 'app-profile-form',
   templateUrl: './profile-form.component.html',
@@ -202,7 +227,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Handle file selection for profile image
    */
-  onFileSelected(event: Event): void {
+  async onFileSelected(event: Event): Promise<void> {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
 
@@ -213,19 +238,15 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // Validate file size (max 5MB)
-    if (file.size > 500 * 1024 * 1024) {
+    if (file.size > 5 * 1024 * 1024) {
       alert('File is too large. Maximum 5MB.');
       return;
     }
 
     this.selectedFileName = file.name;
-    
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      this.profileImage = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
+
+    // Create and save thumbnail
+    this.profileImage = await createThumbnail(file, 100, 0.7);
   }
 
   /**
@@ -312,5 +333,18 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
   onBackClick(): void {
     // Navigate back or handle as needed
     console.log('Back button clicked');
+  }
+
+  get documentLabel(): string {
+    const birthday = this.profileForm?.get('birthday')?.value;
+    if (!birthday) return 'DUI';
+    const birthDate = new Date(birthday);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age >= 18 ? 'DUI' : 'Carnet de minoridad';
   }
 }

@@ -63,19 +63,19 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="profile-form__field">
-                    <mat-label>Documento *</mat-label>
-                    <input matInput formControlName="document" placeholder="DUI o Carnet de minoridad"
-                        (input)="formatDocument($event)">
+                    <mat-label>{{ documentLabel }}</mat-label>
+                    <input matInput formControlName="document" (input)="formatDocument($event)">
                     <mat-error *ngIf="profileForm.get('document')?.hasError('required')">
-                        El documento es requerido
+                        El {{ documentLabel.toLowerCase() }} es obligatorio
                     </mat-error>
                     <mat-error *ngIf="profileForm.get('document')?.hasError('invalidFormat')">
-                        Formato de documento inválido
+                        Formato inválido de {{ documentLabel.toLowerCase() }}
                     </mat-error>
                 </mat-form-field>
 
                 <button mat-raised-button (click)="onSubmit()" 
-                    class="profile-form__submit-button">
+                    class="profile-form__submit-button"
+                    [disabled]="!profileForm.valid">
                     Continuar
                 </button>
             </form>

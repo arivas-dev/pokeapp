@@ -17,15 +17,43 @@ export interface TrainerState {
   isLoading: boolean;
 }
 
-const initialState: TrainerState = {
-  profile: null,
-  selectedPokemon: [],
-  isLoading: false
-};
+const LOCAL_STORAGE_KEY = 'trainerState';
+
+const initialState: TrainerState = loadStateFromStorage();
+
+function loadStateFromStorage(): TrainerState {
+  const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (data) {
+    try {
+      return JSON.parse(data);
+    } catch {
+      return {
+        profile: null,
+        selectedPokemon: [],
+        isLoading: false
+      };
+    }
+  }
+  return {
+    profile: null,
+    selectedPokemon: [],
+    isLoading: false
+  };
+}
+
+function saveStateToStorage(state: TrainerState) {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+}
 
 @Injectable({ providedIn: 'root' })
 export class TrainerStore {
   private state$ = new BehaviorSubject<TrainerState>(initialState);
+
+  constructor() {
+    this.state$.subscribe(state => {
+      saveStateToStorage(state);
+    });
+  }
 
   // Selectors
   get profile$(): Observable<TrainerProfile | null> {
@@ -111,6 +139,11 @@ export class TrainerStore {
   }
 
   reset(): void {
-    this.state$.next(initialState);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    this.state$.next({
+      profile: null,
+      selectedPokemon: [],
+      isLoading: false
+    });
   }
 } 

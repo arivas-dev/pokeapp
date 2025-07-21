@@ -19,7 +19,7 @@
   &__name
     font-size: 2rem
     font-weight: 700
-    color: $primary-color
+    color: #185A7D
     margin: 0
     font-family: $font-family-primary
 
@@ -103,21 +103,52 @@
         color: $error-color
         margin-left: 8px
 
-  &__info
-    margin-top: 20px
-    width: 100%
-    font-size: 1rem
-    color: #333
-    font-family: $font-family-primary
-    text-align: left
+  &__dashboard-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 18px
+    padding: 0 8px
 
-    .profile-image-card__info-item
-      margin-bottom: 8px
-      
-      strong
-        color: $primary-color
-        font-weight: 700
-        margin-right: 4px
+  &__dashboard-header-container
+    display: flex
+    align-items: flex-start
+    justify-content: space-between
+    width: 100%
+
+  &__dashboard-title
+    font-size: 1.3rem
+    font-weight: 500
+    color: $primary-color
+    font-family: 'Poppins', sans-serif
+
+  &__dashboard-medal
+    width: 38px
+    height: 38px
+    object-fit: contain
+    margin-left: 8px
+
+  &__info
+    text-align: left
+    margin-top: 18px
+    padding: 0 8px
+  
+
+  &__info-item
+    font-size: 1.1rem
+    color: #4B4B4B
+    margin-bottom: 8px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 8px
+    font-family: $font-family-primary
+    strong
+      font-weight: 700
+      color: #4B4B4B
+    span
+      font-weight: 300
+      color: #444
 
 Tablet and up
 @media (min-width: $breakpoint-sm)
@@ -160,3 +191,9 @@ Tablet and up
 
 //     &__name
 //       font-size: 3rem
+
+@media (max-width: $breakpoint-sm - 1px)
+  .profile-image-card
+    width: 100%
+    min-width: 0
+    padding: 24px 10px

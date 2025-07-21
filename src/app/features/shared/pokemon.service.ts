@@ -16,7 +16,9 @@ export interface PokemonApiResult {
 }
 
 export interface PokemonStat {
-  name: string;
+  stat: {
+    name: string;
+  };
   base_stat: number;
   effort: number;
 }
@@ -67,6 +69,31 @@ export const STAT_LIMITS = {
   specialDefense: 230,
   speed: 180
 } as const;
+
+export const TYPE_TRANSLATIONS: { [key: string]: string } = {
+  normal: 'Normal',
+  fire: 'Fuego',
+  water: 'Agua',
+  electric: 'Eléctrico',
+  grass: 'Planta',
+  ice: 'Hielo',
+  fighting: 'Lucha',
+  poison: 'Veneno',
+  ground: 'Tierra',
+  flying: 'Volador',
+  psychic: 'Psíquico',
+  bug: 'Bicho',
+  rock: 'Roca',
+  ghost: 'Fantasma',
+  dragon: 'Dragón',
+  dark: 'Siniestro',
+  steel: 'Acero',
+  fairy: 'Hada'
+};
+
+export function translateType(type: string): string {
+  return TYPE_TRANSLATIONS[type] || type.charAt(0).toUpperCase() + type.slice(1);
+}
 
 @Injectable({
   providedIn: 'root'
@@ -124,7 +151,7 @@ export class PokemonService {
     const statsMap = new Map<string, number>();
     
     apiStats.forEach(stat => {
-      const statName = this.normalizeStatName(stat.name);
+      const statName = this.normalizeStatName(stat?.stat?.name);
       if (statName) {
         statsMap.set(statName, stat.base_stat);
       }
