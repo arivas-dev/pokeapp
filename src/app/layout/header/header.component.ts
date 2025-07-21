@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TrainerStore } from '../../store/trainer';
@@ -11,8 +12,13 @@ import { TrainerStore } from '../../store/trainer';
 export class HeaderComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   trainerName: string = 'José';
+  isProfileMenuOpen: boolean = false;
+  hasProfile: boolean = false;
 
-  constructor(private trainerStore: TrainerStore) { }
+  constructor(
+    private trainerStore: TrainerStore,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     // Subscribe to trainer profile from store
@@ -21,6 +27,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ).subscribe((profile: any) => {
       if (profile) {
         this.trainerName = profile.name;
+        this.hasProfile = true;
+      } else {
+        this.hasProfile = false;
+        this.trainerName = 'José';
       }
     });
   }
@@ -30,9 +40,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onProfileDropdown(): void {
-    console.log('Profile dropdown clicked');
-    // TODO: Show profile dropdown menu
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.header__profile-container')) {
+      this.isProfileMenuOpen = false;
+    }
+  }
+
+  toggleProfileMenu(): void {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  onEditProfile(): void {
+    console.log('Edit profile clicked');
+    this.isProfileMenuOpen = false;
+    this.router.navigate(['/profile']);
+  }
+
+  onLogout(): void {
+    console.log('Logout clicked');
+    this.isProfileMenuOpen = false;
+    
+    // Reset store state
+    this.trainerStore.reset();
+    
+    // Navigate to profile page (login)
+    this.router.navigate(['/profile']);
   }
 
   onSearch(): void {

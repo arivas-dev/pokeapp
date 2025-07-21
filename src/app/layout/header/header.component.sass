@@ -21,6 +21,10 @@
     max-width: 100%
     box-sizing: border-box
 
+    // When no profile, center the logo
+    &:has(.header__right:empty)
+      justify-content: center
+
   &__left
     display: flex
     align-items: center
@@ -35,10 +39,17 @@
     height: 32px
     width: auto
 
+  // When no profile, make logo slightly larger
+  &:has(.header__right:empty) &__pokemon-logo
+    height: 40px
+
   &__right
     display: flex
     align-items: center
     gap: 12px
+
+  &__profile-container
+    position: relative
 
   &__profile-dropdown
     display: flex
@@ -57,6 +68,36 @@
     &:hover
       background-color: rgba($primary-color, 0.1)
 
+  &__profile-menu
+    position: absolute
+    top: 100%
+    right: 0
+    background: white
+    border-radius: 8px
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+    min-width: 180px
+    z-index: 1000
+    margin-top: 4px
+    overflow: hidden
+
+  &__menu-item
+    display: flex
+    align-items: center
+    gap: 8px
+    padding: 12px 16px
+    cursor: pointer
+    transition: background-color 0.2s
+    color: $text-color
+    font-size: 14px
+
+    &:hover
+      background-color: rgba($primary-color, 0.1)
+
+    mat-icon
+      font-size: 18px
+      width: 18px
+      height: 18px
+
   &__search-btn
     background: none
     border: none
@@ -72,3 +113,14 @@
 @media (min-width: $breakpoint-lg)
   .header
     padding: 0 50px
+
+// Mobile styles
+@media (max-width: $breakpoint-sm - 1px)
+  .header
+    &__profile-menu
+      right: -50px
+      min-width: 160px
+
+    &__menu-item
+      padding: 10px 12px
+      font-size: 13px
