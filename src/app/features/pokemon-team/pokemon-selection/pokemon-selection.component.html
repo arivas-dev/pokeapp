@@ -41,15 +41,23 @@
 
             <!-- Pokemon grid -->
             <div *ngIf="!loading" class="pokemon-selection__grid">
-                <app-pokemon-card
-                    *ngFor="let pokemon of filteredPokemonList;"
-                    [pokemon]="pokemon"
-                    [selectable]="true"
-                    [maxSelections]="3"
-                    [selectedCount]="selectedPokemon.length"
-                    (pokemonSelected)="onPokemonSelected($event)"
-                    (pokemonDeselected)="onPokemonDeselected($event)">
-                </app-pokemon-card>
+                <cdk-virtual-scroll-viewport
+                    itemSize="9"
+                    class="pokemon-selection__grid-viewport"
+                    [style.height.px]="550"
+                    [style.width.%]="100">
+                    <div class="pokemon-selection__grid">
+                        <app-pokemon-card
+                            *cdkVirtualFor="let pokemon of filteredPokemonList; trackBy: trackByPokemonId"
+                            [pokemon]="pokemon"
+                            [selectable]="true"
+                            [maxSelections]="3"
+                            [selectedCount]="selectedPokemon.length"
+                            (pokemonSelected)="onPokemonSelected($event)"
+                            (pokemonDeselected)="onPokemonDeselected($event)">
+                        </app-pokemon-card>
+                    </div>
+                </cdk-virtual-scroll-viewport>
             </div>
 
             <!-- No results message -->

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 // Angular Material imports
 import { MatInputModule } from '@angular/material/input';
@@ -43,7 +44,8 @@ const routes: Routes = [
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    SharedModule
+    SharedModule,
+    ScrollingModule
   ]
 })
 export class PokemonTeamModule { }

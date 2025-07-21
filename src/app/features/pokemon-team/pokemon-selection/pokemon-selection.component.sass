@@ -41,7 +41,6 @@
     text-align: center
 
   &__search
-    margin-bottom: 20px
 
     .pokemon-selection__search-field
       width: 100%
@@ -71,8 +70,12 @@
   &__grid
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
+    padding-top: 40px
+
+  &__grid-row
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
     gap: 50px
-    margin-bottom: 30px
 
   &__actions
     display: flex
@@ -103,7 +106,7 @@
       opacity: 0.5
       cursor: not-allowed
 
-// Tablet and up
+Tablet and up
 @media (min-width: $breakpoint-sm)
   .pokemon-selection
     // margin-top: 30px
@@ -154,6 +157,7 @@
 
     &__title
       font-size: 30px
+      margin-top: -50px
 
     &__subtitle
       font-size: 18px
@@ -165,3 +169,20 @@
 
     &__save-button
       min-width: 300px
+
+.pokemon-selection__grid-viewport
+  width: 100%
+  // Ajusta el alto según lo que quieras mostrar
+
+.pokemon-selection__grid
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(120px, 2fr))
+  gap: 50px
+  width: 100%
+
+.cdk-virtual-scroll-content-wrapper
+  .pokemon-selection__grid
+    padding-top: 0px
+
+.ng-star-inserted
+  padding-top: 0px

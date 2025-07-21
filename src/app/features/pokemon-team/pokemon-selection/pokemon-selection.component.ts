@@ -6,6 +6,8 @@ import { Pokemon, PokemonService } from '../../shared/pokemon.service';
 import { TrainerStore } from '../../../store/trainer';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 interface ProfileInfo {
   name?: string;
@@ -81,9 +83,6 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /**
-   * Load Pokémon from API
-   */
   loadPokemon(): void {
     this.loading = true;
     this.pokemonService.getPokemonList(9, 0)
@@ -193,6 +192,10 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
       this.trainerStore.setLoading(false);
       this.router.navigate(['/dashboard']);
     }, 3000); // 3 seconds loading time
+  }
+
+  trackByPokemonId(index: number, pokemon: Pokemon): number {
+    return pokemon.id;
   }
 
 }
