@@ -66,7 +66,6 @@ export class ProfileFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private readonly _today = new Date();
   private readonly _currentYear = new Date().getFullYear();
-  //  Exactly 1 year ago from today
   readonly maxDate = new Date(this._currentYear - 1, this._today.getMonth(), this._today.getDate());
 
   constructor(
