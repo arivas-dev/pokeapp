@@ -10,7 +10,7 @@
   display: flex
   flex-direction: column
   justify-content: space-between
-  width: calc(100vw - 60px)
+  width: 100%
   gap: 20px
 
   &__header
@@ -150,7 +150,7 @@
       font-weight: 300
       color: #444
 
-Tablet and up
+// Tablet and up
 @media (min-width: $breakpoint-sm)
   .profile-image-card
     min-height: 320px
@@ -158,6 +158,7 @@ Tablet and up
     max-width: 380px
     border-radius: 30px
     margin: 0 auto
+    width: calc(100vw - 60px)
 
     &__image-container
       .profile-image-card__image,
@@ -192,8 +193,8 @@ Tablet and up
 //     &__name
 //       font-size: 3rem
 
-@media (max-width: $breakpoint-sm - 1px)
+@media (max-width: $breakpoint-sm)
   .profile-image-card
     width: 100%
     min-width: 0
-    padding: 24px 10px
+    // padding: 24px 10px

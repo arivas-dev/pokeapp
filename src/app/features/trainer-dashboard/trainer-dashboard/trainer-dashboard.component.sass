@@ -1,5 +1,7 @@
 @import '../../../../styles/variables'
 
+// MOBILE FIRST STYLES
+
 .trainer-dashboard
   width: 100%
   min-height: 100vh
@@ -7,199 +9,202 @@
   display: flex
   flex-direction: column
   position: relative
+  align-items: center
 
   &__content
     flex: 1
     display: flex
-    gap: 20px
-    padding: 30px 20px
-    max-width: 1200px
-    margin: 0 auto
+    flex-direction: column
+    padding: 16px 8px
     width: 100%
+    max-width: 100%
 
   &__profile-section
-    flex: 0 0 350px
+    flex: 0 0 auto
     display: flex
     flex-direction: column
-    gap: 20px
-
-  &__profile-header
-    display: flex
-    justify-content: space-between
+    gap: 16px
     align-items: center
 
+  &__profile-header,
   &__profile-header-row
     display: flex
     align-items: center
     justify-content: space-between
-    margin-bottom: 24px
-    padding: 0 8px
+    width: 70%
 
+  &__profile-card
+    display: flex
+
+ 
   &__greeting
-    font-size: 2.2rem
+    font-size: 1.4rem
     font-weight: 700
     color: $primary-color
     font-family: 'Poppins', sans-serif
     margin: 0
+    width: 100%
+
 
   &__edit-profile-btn
     display: flex
     align-items: center
-    gap: 6px
+    gap: 4px
     background: white
     border: 2px solid $primary-color
     color: $primary-color
-    font-size: 14px
+    font-size: 12px
     font-weight: 500
-    border-radius: 12px
-    padding: 3px 10px
+    border-radius: 10px
+    padding: 2px 8px
     cursor: pointer
     transition: background-color 0.2s, color 0.2s, border-color 0.2s
     box-shadow: none
     outline: none
     font-family: 'Poppins', sans-serif
+    flex-wrap: nowrap
+    width: 70%
+    text-align: center
+    justify-content: center
     mat-icon
-      font-size: 16px
+      font-size: 14px
       align-content: center
     &:hover
       background: $primary-color
       color: white
       border-color: $primary-color
 
-  &__profile-card
-    background: $secondary-color
-    border-radius: 20px
-    padding: 24px
-    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
-    position: relative
 
   &__profile-card-header
     display: flex
     justify-content: space-between
     align-items: center
-    margin-bottom: 20px
+    margin-bottom: 12px
 
   &__trainer-label
-    font-size: 14px
+    font-size: 12px
     color: $primary-color
     font-weight: 600
 
   &__medal
     color: #FFD700
-    font-size: 20px
+    font-size: 16px
 
   &__profile-image
     display: flex
     justify-content: center
-    margin-bottom: 20px
+    margin-bottom: 12px
 
   &__profile-img
-    width: 120px
-    height: 120px
+    width: 80px
+    height: 80px
     border-radius: 50%
     object-fit: cover
-    border: 4px solid white
+    border: 3px solid white
 
   &__profile-info
     display: flex
     flex-direction: column
-    gap: 8px
+    gap: 6px
 
   &__info-item
-    font-size: 14px
+    font-size: 12px
     color: $text-color
     line-height: 1.4
-
     strong
       color: $primary-color
       font-weight: 600
 
   &__pokemon-section
-    flex: 1
+    // flex: 1
     display: flex
     flex-direction: column
-    // gap: 20px
-    padding: 20px 40px
-    padding-top: 80px
+    // padding: 12px 8px
+    padding: 40px 20px
+    align-items: center
+   
+    
 
   &__pokemon-header
     display: flex
-    justify-content: space-between
+    flex-direction: row
     align-items: center
+    gap: 8px
+    margin-bottom: 40px
+    justify-content: space-between
+    width: 70%
 
   &__pokemon-title
-    font-size: 30px
+    font-size: 1.3rem
     font-weight: 300
     color: $primary-color
     margin: 0
-    margin-bottom: 30px
+
 
   &__edit-pokemon-btn
     display: flex
     align-items: center
     justify-content: center
-    gap: 6px
+    gap: 4px
     background: white
     border: 2px solid $primary-color
     color: $primary-color
-    font-size: 14px
+    font-size: 12px
     font-weight: 500
-    border-radius: 12px
-    padding: 3px 10px
+    border-radius: 10px
+    padding: 2px 8px
     cursor: pointer
     transition: background-color 0.2s, color 0.2s, border-color 0.2s
     box-shadow: none
     outline: none
     font-family: 'Poppins', sans-serif
     mat-icon
-      font-size: 16px
+      font-size: 14px
       align-content: center
     &:hover
       background: $primary-color
       color: white
 
   &__pokemon-grid
-    gap: 30px
+    gap: 16px
     display: flex
     flex-direction: column
-    overflow-y: auto
-    max-height: 700px
-    overflow-x: hidden
+    // overflow-y: auto
+    // max-height: 400px
+    // overflow-x: hidden
+    width: 100%
 
   &__pokemon-card
     background-color: #F2F2F2
-    width: 100%
-    border-radius: 20px
-    padding: 20px
+    // width: 100%
+    border-radius: 16px
+    padding: 8px
 
   &__pokemon-card-row
     display: flex
-    flex-direction: row
+    flex-direction: column
 
   &__pokemon-card-left
-    width: 40%
+    width: 100%
     display: flex
     flex-direction: column
     align-items: center
 
   &__pokemon-image
-    width: 200px
-    height: 220px
+    width: 120px
+    height: 120px
     object-fit: cover
-    // setting image in center
     margin: 0 auto
-    // margin-bottom: -30px
-    // box-shadow: 0 4px 16px rgba(0,0,0,0.10)
 
   &__pokemon-info-block
     display: flex
     flex-direction: column
     align-items: center
-    gap: 4px
+    gap: 2px
     width: 100%
 
   &__pokemon-name
-    font-size: 2rem
+    font-size: 1.1rem
     font-weight: 700
     color: #000000
     margin-bottom: 0
@@ -208,7 +213,7 @@
     font-family: 'Poppins', sans-serif
 
   &__pokemon-types
-    font-size: 1rem
+    font-size: 0.9rem
     color: #888
     font-weight: 400
     text-align: center
@@ -220,34 +225,33 @@
     display: flex
     align-items: center
     justify-content: flex-start
-    min-width: 220px
+    min-width: 120px
     width: 100%
 
   &__pokemon-stats
     width: 100%
     display: flex
     flex-direction: column
-    gap: 14px
+    gap: 8px
     margin-left: 0
 
   &__stat-item
     display: flex
     align-items: center
-    gap: 12px
+    gap: 8px
 
   &__stat-label
-    font-size: 1rem
+    font-size: 0.9rem
     color: #444
     font-weight: 300
-    min-width: 120px
+    min-width: 80px
     text-align: left
     font-family: 'Poppins', sans-serif
     font-weight: 300
 
   &__stat-bar
     flex: 1
-    height: 12px
-    // background-color: #e0e0e0
+    height: 8px
     border-radius: 8px
     overflow: hidden
     box-shadow: 0 2px 8px rgba(0,0,0,0.08)
@@ -258,69 +262,127 @@
     transition: width 0.3s ease
 
   &__stat-fill--grass
-    background-color: #4caf50 // verde
+    background-color: #4caf50
   &__stat-fill--fire
-    background-color: #ffd600 // amarillo
+    background-color: #ffd600
   &__stat-fill--water
-    background-color: #2196f3 // azul
+    background-color: #2196f3
   &__stat-fill--electric
-    background-color: #ff7043 // naranja
+    background-color: #ff7043
   &__stat-fill--psychic
-    background-color: #ab47bc // morado
+    background-color: #ab47bc
   &__stat-fill--rock
-    background-color: #ffb300 // ámbar
+    background-color: #ffb300
 
-// // Mobile styles
-// @media (max-width: $breakpoint-sm - 1px)
-//   .trainer-dashboard
-//     &__content
-//       flex-direction: column
-//       padding: 20px 15px
-//       gap: 20px
+// DESKTOP STYLES
+@media (min-width: 769px)
+  .trainer-dashboard
+    &__content
+      flex-direction: row
+      gap: 20px
+      padding: 30px 20px
+      max-width: 1200px
+      margin: 0 auto
+    &__profile-section
+      flex: 0 0 350px
+      gap: 20px
+      min-width: 50%
+    &__profile-header-row
+      
+    &__greeting
+      font-size: 2.2rem
+    &__edit-profile-btn
+      font-size: 14px
+      border-radius: 12px
+      padding: 3px 10px
+      mat-icon
+        font-size: 16px
+    &__profile-card
+      border-radius: 20px
+      padding: 24px
+    &__profile-card-header
+      margin-bottom: 20px
+    &__trainer-label
+      font-size: 14px
+    &__medal
+      font-size: 20px
+    &__profile-image
+      margin-bottom: 20px
+    &__profile-img
+      width: 120px
+      height: 120px
+      border: 4px solid white
+    &__profile-info
+      gap: 8px
+    &__info-item
+      font-size: 14px
+    &__pokemon-section
+      padding-top: 80px
+      width: 100% 
+      padding-left: 0
+      padding-right: 0
+    &__pokemon-header
+      flex-direction: row
+      align-items: center
+      gap: 0
+    &__pokemon-title
+      font-size: 30px
+      margin-bottom: 30px
+    &__edit-pokemon-btn
+      font-size: 14px
+      border-radius: 12px
+      padding: 3px 10px
+      mat-icon
+        font-size: 16px
+    &__pokemon-grid
+      gap: 30px
+      max-height: 700px
+      overflow-y: auto
+      overflow-x: hidden
+      padding-right: 16px
+    &__pokemon-card
+      border-radius: 20px
+      // padding: 20px
+    &__pokemon-card-row
+      flex-direction: row
+      padding: 20px
+    &__pokemon-card-left
+      width: 40%
+    &__pokemon-image
+      width: 200px
+      height: 220px
+    &__pokemon-info-block
+      gap: 4px
+    &__pokemon-name
+      font-size: 2rem
+    &__pokemon-types
+      font-size: 1rem
+    &__pokemon-card-right
+      min-width: 220px
+    &__pokemon-stats
+      gap: 14px
+    &__stat-item
+      gap: 12px
+    &__stat-label
+      font-size: 1rem
+      min-width: 120px
+    &__stat-bar
+      height: 12px
 
-//     &__profile-section
-//       flex: none
-//       width: 100%
+// .trainer-dashboard__pokemon-grid
+//   // Separar la barra de scroll de las cards
+//   padding-right: 16px // o el valor que prefieras
 
-//     &__pokemon-grid
-//       grid-template-columns: 1fr
-//       gap: 16px
+//   // Personalizar el scrollbar solo en webkit (Chrome, Edge, Safari)
+//   &::-webkit-scrollbar
+//     width: 8px // ancho del scrollbar
+//   &::-webkit-scrollbar-thumb
+//     background: #e0e0e0
+//     border-radius: 8px
+//   &::-webkit-scrollbar-track
+//     background: transparent
+//     margin: 16px 0 // hace que el thumb sea más corto (pequeño en altura)
 
-//     &__pokemon-card
-//       flex-direction: column
-//       gap: 12px
-
-//     &__pokemon-image-container
-//       flex: none
-//       display: flex
-//       justify-content: center
-
-//     &__pokemon-image
-//       width: 100px
-//       height: 100px
-//       transform: translateY(-15px)
-//       margin-bottom: -15px
-
-//     &__pokemon-stats
-//       gap: 8px
-
-//     &__stat-item
-//       gap: 12px
-
-//     &__stat-label
-//       min-width: 100px
-//       font-size: 12px
-
-// // Tablet styles
-// @media (min-width: $breakpoint-sm) and (max-width: $breakpoint-md - 1px)
-//   .trainer-dashboard
-//     &__content
-//       padding: 25px
-//       gap: 25px
-
-//     &__profile-section
-//       flex: 0 0 320px
-
-//     &__pokemon-grid
-//       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
-//       gap: 18px
+//   // Para Firefox
+//   scrollbar-width: thin
+//   scrollbar-color: #e0e0e0 transparent
