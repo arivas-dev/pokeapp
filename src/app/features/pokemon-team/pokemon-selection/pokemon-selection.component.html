@@ -26,10 +26,9 @@
             <div class="pokemon-selection__search">
                 <mat-form-field appearance="outline" class="pokemon-selection__search-field">
                     <mat-label>Buscar por índice, nombre...</mat-label>
-                    <input matInput 
+                    <input matInput
                            placeholder="Buscar Pokémon"
-                           [(ngModel)]="searchQuery"
-                           (input)="onSearchInput($event)">
+                           [formControl]="searchControl">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </div>
@@ -43,7 +42,7 @@
             <!-- Pokemon grid -->
             <div *ngIf="!loading" class="pokemon-selection__grid">
                 <app-pokemon-card
-                    *ngFor="let pokemon of pokemonList"
+                    *ngFor="let pokemon of filteredPokemonList;"
                     [pokemon]="pokemon"
                     [selectable]="true"
                     [maxSelections]="3"

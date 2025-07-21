@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pokemon, PokemonService } from '../../shared/pokemon.service';
 import { TrainerStore } from '../../../store/trainer';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 interface ProfileInfo {
   name?: string;
@@ -29,9 +31,11 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   };
 
   pokemonList: Pokemon[] = [];
+  filteredPokemonList: Pokemon[] = [];
   selectedPokemon: Pokemon[] = [];
   loading: boolean = false;
   searchQuery: string = '';
+  searchControl = new FormControl('');
 
   constructor(
     private pokemonService: PokemonService,
@@ -46,8 +50,18 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
       this.syncSelectedState();
     });
 
-    // 2. Carga la lista de Pokémon (puede ser asíncrono)
+    // Debounced search
+
+
+    // Carga inicial
     this.loadPokemonList();
+
+    // Filtrado local reactivo
+    this.searchControl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(query => {
+        this.filterPokemon(query);
+      });
 
     this.trainerStore.profile$.pipe(takeUntil(this.destroy$)).subscribe((profile) => {
       if (profile) {
@@ -87,32 +101,41 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   }
 
   loadPokemonList() {
-    // Supón que esto es asíncrono
+    this.loading = true;
     this.pokemonService.getPokemonList().subscribe(list => {
       this.pokemonList = list;
+      this.filteredPokemonList = list;
       this.syncSelectedState();
+      this.loading = false;
     });
+  }
+
+  filterPokemon(query: string): void {
+    if (!query || !query.trim()) {
+      this.filteredPokemonList = this.pokemonList;
+    } else {
+      const lowerQuery = query.toLowerCase();
+      this.filteredPokemonList = this.pokemonList.filter(p =>
+        p.name.toLowerCase().includes(lowerQuery) ||
+        p.id.toString().padStart(3, '0').includes(lowerQuery)
+      );
+    }
+    this.syncSelectedState();
   }
 
   syncSelectedState() {
     if (!this.pokemonList.length) return;
     const selectedIds = new Set(this.selectedPokemon.map(p => p.id));
+    // Marca en la lista original
     this.pokemonList.forEach(p => {
+      p.selected = selectedIds.has(p.id);
+    });
+    // Marca en la lista filtrada
+    this.filteredPokemonList.forEach(p => {
       p.selected = selectedIds.has(p.id);
     });
   }
 
-  /**
-   * Handle search input event
-   */
-  onSearchInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.searchPokemon(target.value);
-  }
-
-  /**
-   * Search Pokémon by name
-   */
   searchPokemon(query: string): void {
     this.searchQuery = query;
     if (!query.trim()) {
@@ -138,15 +161,15 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
   }
 
   onPokemonSelected(pokemon: Pokemon): void {
-    pokemon.selected = true;
-    this.selectedPokemon.push(pokemon);
-    this.trainerStore.selectPokemon(pokemon);
+    if (!this.selectedPokemon.some(p => p.id === pokemon.id)) {
+      this.selectedPokemon.push(pokemon);
+    }
+    this.syncSelectedState();
   }
 
   onPokemonDeselected(pokemon: Pokemon): void {
-    pokemon.selected = false;
     this.selectedPokemon = this.selectedPokemon.filter(p => p.id !== pokemon.id);
-    this.trainerStore.deselectPokemon(pokemon.id);
+    this.syncSelectedState();
   }
 
   onBackClick(): void {
@@ -171,4 +194,5 @@ export class PokemonSelectionComponent implements OnInit, OnDestroy {
       this.router.navigate(['/dashboard']);
     }, 3000); // 3 seconds loading time
   }
+
 }
