@@ -32,11 +32,9 @@
     align-items: center
     justify-content: space-between
     width: 70%
-
   &__profile-card
     display: flex
 
- 
   &__greeting
     font-size: 1.4rem
     font-weight: 700
@@ -44,7 +42,7 @@
     font-family: 'Poppins', sans-serif
     margin: 0
     width: 100%
-
+    text-wrap: nowrap
 
   &__edit-profile-btn
     display: flex
@@ -73,7 +71,6 @@
       background: $primary-color
       color: white
       border-color: $primary-color
-
 
   &__profile-card-header
     display: flex
@@ -122,8 +119,6 @@
     // padding: 12px 8px
     padding: 40px 20px
     align-items: center
-   
-    
 
   &__pokemon-header
     display: flex
@@ -133,14 +128,12 @@
     margin-bottom: 40px
     justify-content: space-between
     width: 70%
-    
 
   &__pokemon-title
     font-size: 1.3rem
     font-weight: 300
     color: $primary-color
     margin: 0
-
 
   &__edit-pokemon-btn
     display: flex
@@ -184,6 +177,7 @@
   &__pokemon-card-row
     display: flex
     flex-direction: column
+    gap: 0px
 
   &__pokemon-card-left
     width: 100%
@@ -250,6 +244,7 @@
     text-align: left
     font-family: 'Poppins', sans-serif
     font-weight: 300
+    text-wrap: nowrap
 
   &__stat-bar
     width: 100%
@@ -290,7 +285,7 @@
       gap: 20px
       min-width: 50%
     &__profile-header-row
-      
+
     &__greeting
       font-size: 2.2rem
     &__edit-profile-btn
@@ -467,8 +462,10 @@
   gap: 12px
 
 .trainer-dashboard__stat-label
-  font-size: 1.1rem
-  min-width: 120px
+  width: 150px // O el valor que necesites para que todos los textos quepan
+  font-size: 0.95rem
+  white-space: nowrap
+  text-align: right
 
 .trainer-dashboard__stat-bar
   height: 10px
@@ -488,5 +485,94 @@
   background-color: #ffb300
 
 @media (min-width: $breakpoint-md)
+  .trainer-dashboard__stat-item
+  .trainer-dashboard__profile-header-row
+    width: 50%
+
   .trainer-dashboard__pokemon-card
     min-height: 400px
+
+.dashboard-pokemon-swiper
+  .swiper-button-prev,
+  .swiper-button-next
+    color: #1976d2 !important
+    fill: #1976d2 !important
+    stroke: #1976d2 !important
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after
+    color: #1976d2 !important
+    fill: #1976d2 !important
+    stroke: #1976d2 !important
+    font-size: 2.5rem !important
+    text-shadow: 0 2px 8px rgba(0,0,0,0.10)
+
+@media (max-width: 600px)
+  .trainer-dashboard__pokemon-card-row
+    flex-direction: column
+    align-items: center
+    gap: 8px
+    width: 100%
+    min-width: 0
+
+  .trainer-dashboard__pokemon-stats
+    width: 100%
+    max-width: 260px
+    margin: 0 auto
+    min-width: 0
+    gap: 6px
+
+  .trainer-dashboard__stat-item
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 2px
+    width: 100%
+    min-width: 0
+
+  .trainer-dashboard__stat-label
+    width: 120px // Usa width fijo, no min/max
+    font-size: 0.95rem
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    text-align: left
+
+  .trainer-dashboard__stat-bar
+    width: 100%
+    min-width: 0
+    height: 8px
+    box-sizing: border-box
+    background: #f0f0f0
+
+// Desktop y tablet (por defecto)
+.trainer-dashboard__pokemon-stats
+  width: 100%
+  max-width: 320px
+  margin: 0 auto
+  min-width: 0
+  gap: 12px
+
+.trainer-dashboard__stat-item
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 8px
+  width: 100%
+  min-width: 0
+
+.trainer-dashboard__stat-label
+  min-width: 110px
+  max-width: 140px
+  font-size: 1.05rem
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  text-align: left
+
+.trainer-dashboard__stat-bar
+  flex: 1
+  min-width: 0
+  height: 10px
+  box-sizing: border-box
+  background: #f0f0f0
